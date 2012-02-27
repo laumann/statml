@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subfig}
+\usepackage{fullpage}
+\usepackage{url,paralist}
+
+\author{Philip Pickering\\ \url{pgpick@gmx.at} \and Marco Eilers\\ \url{eilers.marco@googlemail.com} \and Thomas Bracht Laumann Jespersen\\ \url{ntl316@alumni.ku.dk}}
+\title{Statistical Methods for Machine Learning\\ Assignment 2: Basic Learning Algorithms}
+\date{}
+
+\newcommand{\vect}[1]{\ensuremath{\boldsymbol{\mathbf{#1}}}\xspace}
+%%\newcommand{\M}{\ensuremath{\begin{pmatrix}100 & 0 
+
+%% %% Uncomment these lines to get a box around all figures
+%% \usepackage{float}
+%% \floatstyle{boxed}
+%% \restylefloat{figure}
+
+\begin{document}
+\maketitle
+
+\section{Regression}
+
+\subsection{Maximum Likelihood solution}
+
+Use linear model
+\[
+y(\vect{x},\vect{w}) = w_0 + w_1 x_1 + w_2 x_2 + \dots + w_D x_D
+\]
+and for the $D$ variables we let $\phi_i(\vect{x}) = x_i$ for
+$i = 1,\dots,D$ and $\phi_0(\vect{x}) = 1$. 
+\subsubsection{Selection 1}
+
+For our first selection $S_1$ our design matrix becomes a $200\times
+5$ matrix.
+
+\[
+\vect{\Phi}_{S_1} = \begin{bmatrix}1 & \vect{x}_{1,1} & \vect{x}_{1,2} & \vect{x}_{1,3} & \vect{x}_{1,4}\\
+\hfill & \hfill & \vdots & \hfill & \hfill\\
+1 & \vect{x}_{i,1} & \vect{x}_{i,2} & \vect{x}_{i,3} & \vect{x}_{i,4}\\
+\hfill & \hfill & \vdots & \hfill & \hfill\\
+1 & \vect{x}_{N,1} & \vect{x}_{N,2} & \vect{x}_{N,3} & \vect{x}_{N,4}\\
+\end{bmatrix}
+\]
+where the notation $\vect{x}_{i,j}$ indicates the $j$'th entry in the
+$i$'th vector. %%Similarly we obtain a design matrix for our second
+%%selection, $S_2$ of dimensions $200\times 2$, with $D = 2$:
+
+Finding the ML estimate of our parameters for $S_1$ gives
+\[
+\vect{w}_{S_1} = \left[\!\begin{tabular}{r@{.}l} -43 & 0947\\ -0 &
+  1299\\ 0 & 0352\\ 0 & 9335\\ -0 &
+  0433\end{tabular}\!\right]\quad\text{ and }\quad \mathrm{RMS}_{S_1} = 4.3897
+\]
+
+\subsubsection{Selection 2}
+
+Our second selection $S_2$ consists only of the data from the `Abdomen
+2' column, giving a design matrix $\vect{\Phi}_{S_2}$ of dimensions
+$200\times 2$. Training the model on the same training data yields:
+\[
+\vect{w}_{S_2} = \left[\!\begin{tabular}{r@{.}l}
+  -37 & 4085\\
+  0 & 6133
+  \end{tabular}\!\right]\quad
+\text{ and }\quad \mathrm{RMS}_{S_2} = 5.2064
+\]
+
+%% Conclusion
+\subsubsection{Discussion}
+Just looking at the root mean square values of the two selections, it
+appears that $S_1$ performs better than $S_2$, but not by a lot. This
+suggests that either the variable `Abdomen 2' is the most descriptive
+in terms of body, or that the linear model simply is a poor fit no
+matter how many variables we include. It could be a combination of the
+two.
+
+It could probably be argued that the linear regression model is a poor
+predictor, but including more variables should improve the results.
+
+\subsection{Maximum a posteriori solution}
+
+Use MAP estimation. Fix prior to zero mean isotropic Gaussian (eq. 3.52)
+\[
+p(\vect{w}|\alpha) = \mathcal{N}(\vect{w}|\vect{0},\alpha^{-1}\vect{I})
+\]
+Set noise precision parameter $\beta = 1$. Compute (3.53) and (3.54)
+\[
+\text{(3.53)}\quad \vect{m}_N = \beta\vect{S}_N\vect{\Phi}^T\mathsf{t}
+\]
+and
+\[
+\text{(3.54)}\quad \vect{S}_N^{-1} = \alpha\vect{I} + \beta\vect{\Phi}^T\vect{\Phi}
+\]
+
+Apply model to test set and compute RMS error for different values of the precision parameter $\alpha$.
+
+\subsection{Theory}
+
+Verify result in equation (3.49) for the posterior distribution of the
+parameters \vect{w} in the linear basis function in which $\vect{m}_N$
+and $\vect{S}_N$ are defined 
+
+\section{Linear Discriminant Analysis}
+
+Visualize the training data sets in three 2D plots.
+
+Apply LDA to the training data, report accuracies of the classifier on
+the training as well as on the test sets. Explain the results. Discuss
+similarities and differences in performance on three data sets. Could
+a non-linear method do better?
+
+Implement LDA algorithm by hand.
+
+\section{Nearest Neighbor Classification}
+
+\subsection{Nearest Neighbor Classification with Euclidian Metric}
+
+Implement $k$-NN. Train for all three \textsc{knoll} problems using
+training data sets. Report accuracy on corresponding sets for $k =
+1,2,3,\dots,9$. Explain results; discuss similarities and differences
+in performance on the three data sets. Compare results to LDA results.
+
+Hand in: classifier source code, results, short discussion.
+
+\subsection{Changing the Metric}
+
+To prove that $d$ is a metric, given
+\[
+d(\vect{x},\vect{z}) = \|\vect{M}\vect{x} - \vect{M}\vect{z}\|\text{,
+  where } \vect{M} = \begin{pmatrix} 100 & 0 \\ 0 & 1\end{pmatrix}
+\]
+and $\|\cdot\|$ is the standard $L_2$-norm (in $\mathbb{R}^2$), we
+need to verify $\forall \vect{x},\vect{y}\in \mathbb{R}^2$ that
+\begin{inparaenum}[1)]
+  \item $d(\vect{x},\vect{y}) \geq 0$; 
+  \item $d(\vect{x},\vect{y}) = 0 \Leftrightarrow \vect{x} = \vect{y}$;
+  \item $d(\vect{x},\vect{y}) =  d(\vect{y},\vect{x})$ (symmetry) and
+  \item $\forall \vect{x},\vect{y},\vect{z} \in \mathbb{R}^2 : d(\vect{x},z) \leq d(\vect{x},\vect{y}) + d(\vect{y},\vect{z})$.
+\end{inparaenum}
+
+\subsubsection{Revised proof --- basic observations}
+
+We need only to observe that $\vect{M}$ is a projection $m : \mathbb{R}^2 \rightarrow \mathbb{R}^2$, i.e.\ onto $\mathbb{R}^2$ itself, given by $m(\vect{x}) = \vect{M}\vect{x}$. This immediately gives us all the properties we need, because $L_2$ is itself a (complete) metric on $\mathbb{R}^2$.
+
+For instance, if we let $\vect{x},\vect{y},\vect{z} \in \mathbb{R}^2$ and $\vect{x'},\vect{y'},\vect{z'}$ be the result of applying $m$ on $\vect{x},\vect{y},\vect{z}$ respectively, we can prove the triangle inequality:
+
+\begin{align}
+\nonumber d(\vect{x},\vect{z}) &= \left\|\vect{M}\vect{x} - \vect{M}\vect{z}\right\|\\
+\nonumber &= \left\|\vect{M}\vect{x} - \vect{M}\vect{y} + \vect{M}\vect{y} - \vect{M}\vect{z}\right\|\\
+\nonumber &= \left\|(\vect{x'} - \vect{y'}) + (\vect{y'} - \vect{z'})\right\|\\
+\nonumber &\leq \left\|\vect{x'} - \vect{y'}\right\| + \left\|\vect{y'} - \vect{z'}\right\|\quad \text{(by property of } L_2 \text{ norm)}\\
+  &= d(\vect{x},\vect{y}) + d(\vect{y},\vect{z})
+\end{align}
+
+\subsubsection{Original proof --- the long way}
+
+Let $\vect{x}, \vect{y} \in \mathbb{R}^2$. As it is easier to consider
+the square of the $L_2$ norm, we will do so:
+\begin{align}
+\nonumber  d(\vect{x},\vect{y})^2 &= \left\|\begin{pmatrix} 100 & 0\\ 0 & 1\end{pmatrix}\begin{pmatrix}x_1\\ x_2\end{pmatrix} - \begin{pmatrix}100 & 0\\ 0 & 1\end{pmatrix}\begin{pmatrix}y_1\\ y_2\end{pmatrix}\right\|^2 \\
+      \nonumber &= \left\| \begin{pmatrix} 100(x_1 - y_1)\\ x_2 - y_2\end{pmatrix}\right\|^2\\
+\nonumber          &= \begin{pmatrix} 100(x_1 - y_1)\\ x_2 - y_2\end{pmatrix}^T\begin{pmatrix} 100(x_1 - y_1)\\ x_2 - y_2\end{pmatrix}\\
+            &= (100(x_1 - y_1))^2 + (x_2 - y_2)^2 \label{eq:c1}.
+\end{align}
+
+From \eqref{eq:c1} we observe that $(x_1 - y_1)^2 \geq 0$ and
+similarly $(x_2 - y_2)^2 \geq 0$ for all values in $\mathbb{R}$, so
+our first criteria for a metric is fulfilled. We also observe that if
+$d(\vect{x},\vect{y}) = 0$ it implies $x_1 - y_1 = 0$ and $x_2 - y_2 =
+0$, which means that $x_1 = y_1$ and $x_2 = y_2$, thus $d$ fulfills
+our second requirement for a metric.
+
+Our requirement of symmetry requires a little more
+investigation. Proceeding from \eqref{eq:c1}, we find
+\begin{align}
+\nonumber (100(x_1 - y_1))^2 + (x_2 - y_2)^2 &= 100^2(x_1^2 - 2x_1y_1 + y_1^2) + (x_2^2 - 2x_2y_2 + y_2^2)\\
+  \nonumber &= 100^2(y_1^2 - 2y_1x_1 + x_1^2) + (y_2^2 - 2y_2x_2 + x_2^2)\\
+  \nonumber &= (100(y_1 - x_1))^2 + (y_2 - x_2)^2\\
+  &= d(\vect{y},\vect{x})^2\label{eq:c2},
+\end{align}
+where \eqref{eq:c2} gives us $d(\vect{x},\vect{y}) =
+d(\vect{y},\vect{x})$ and therefore fulfills the symmetry
+requirement.
+
+Our last requirement is the triangle inequality, i.e.\ $d(\vect{x},\vect{z}) \leq d(\vect{x},\vect{y}) + d(\vect{y},\vect{z}), \forall \vect{x},\vect{y},\vect{z}\in \mathbb{R}^2$.
+
+Let $\vect{x},\vect{y},\vect{z}\in\mathbb{R}^2$.
+\begin{align}
+  d(\vect{x},\vect{z}) &= \left\|\vect{M}\vect{x} - \vect{M}\vect{z}\right\|\\
+  &= \left\|\vect{M}\vect{z} - \vect{M}\vect{y} + \vect{M}\vect{y} - \vect{M}\vect{z}\right\|\\
+  &\leq \left\|\vect{M}\vect{z} - \vect{M}\vect{y}\right\| + \left\|\vect{M}\vect{y} - \vect{M}\vect{z}\right\|\\
+  &= d(\vect{x},\vect{y}) + d(\vect{y},\vect{z})
+  %% &= (\vect{M}\vect{x} - \vect{M}\vect{z})^T(\vect{M}\vect{x} - \vect{M}\vect{z})\\
+  %% &= ((\vect{M}\vect{x})^T - (\vect{M}\vect{z})^T)(\vect{M}\vect{x} - \vect{M}\vect{z})\\
+  %% &= (\vect{M}\vect{x})^T\vect{M}\vect{x} \\
+  %% &= \quad\vdots\quad \text{(We want to arrive at the following)} \\
+  %% &\leq \left\|\vect{M}\vect{x} - \vect{M}\vect{y}\right\|^2 + \left\|\vect{M}\vect{y} - \vect{M}\vect{z}\right\|^2\\
+  %% &= d(\vect{x},\vect{y})^2 + d(\vect{y},\vect{z})^2
+\end{align}
+
+\subsubsection{Results}
+Use $d$ as metric in $k$-NN classifier and apply to
+\textsc{knollC}. Explain results.
+
+
+\end{document}
