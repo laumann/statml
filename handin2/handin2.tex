@@ -86,20 +86,44 @@ predictor, but including more variables should improve the results.
 
 \subsection{Maximum a posteriori solution}
 
-Use MAP estimation. Fix prior to zero mean isotropic Gaussian (eq. 3.52)
-\[
-p(\vect{w}|\alpha) = \mathcal{N}(\vect{w}|\vect{0},\alpha^{-1}\vect{I})
-\]
-Set noise precision parameter $\beta = 1$. Compute (3.53) and (3.54)
-\[
-\text{(3.53)}\quad \vect{m}_N = \beta\vect{S}_N\vect{\Phi}^T\mathsf{t}
-\]
-and
-\[
-\text{(3.54)}\quad \vect{S}_N^{-1} = \alpha\vect{I} + \beta\vect{\Phi}^T\vect{\Phi}
-\]
+%% Use MAP estimation. Fix prior to zero mean isotropic Gaussian (eq. 3.52)
+%% \[
+%% p(\vect{w}|\alpha) = \mathcal{N}(\vect{w}|\vect{0},\alpha^{-1}\vect{I})
+%% \]
+%% Set noise precision parameter $\beta = 1$. Compute (3.53) and (3.54)
+%% \[
+%% \text{(3.53)}\quad \vect{m}_N = \beta\vect{S}_N\vect{\Phi}^T\mathsf{t}
+%% \]
+%% and
+%% \[
+%% \text{(3.54)}\quad \vect{S}_N^{-1} = \alpha\vect{I} + \beta\vect{\Phi}^T\vect{\Phi}
+%% \]
 
-Apply model to test set and compute RMS error for different values of the precision parameter $\alpha$.
+\begin{figure}
+\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel1.eps}}
+\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel2.eps}}
+\caption{Plot of RMS against varying values of $\alpha$}
+\label{fig:rmsalpha}
+\end{figure}
+
+In fig.~\ref{fig:rmsalpha} two plots are found of the root mean square
+values for varying values of $\alpha$. In both plots we set $\beta =
+1$. The RMS value of the ML solution is plotted as a straight line.
+
+We can observe for both plots that when $\alpha = 0$, we obtain the
+same $\mathrm{RMS}$ error for the MAP estimate as for the ML
+solution. This is expected and demonstrates that when our prior
+precision parameters are set to zero, the MAP estimate becomes the ML
+estimate.
+
+Fig.~\ref{fig:rmsalpha}(a) is the plot for $S_1$, and it can be seen
+that the $\mathrm{RMS}_\mathrm{MAP}$ error drops below the
+$\mathrm{RMS}_\mathrm{ML}$ in the interval $[-0.091,0]$. In
+fig.~\ref{fig:rmsalpha}(b) the plot for $S_2$ similarly gives us that
+the $\mathrm{RMS}_\mathrm{MAP}$ error is lower in the interval
+$[-0.844,0]$.
+
+%%Apply model to test set and compute RMS error for different values of the precision parameter $\alpha$.
 
 \subsection{Theory}
 
