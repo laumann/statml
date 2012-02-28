@@ -3,10 +3,16 @@ function [data class] = loadknoll(file)
 %% with double values and the its corresponding class in a column
 %% vector of size 100 with integer entries.
 
+%% The reason for returning two matrices instead of one, is because
+%% MATLAB is seriously limited in terms of mixing data types in a
+%% matrix (it cannot). The class vector is of types int32 and our
+%% data is double.
+
     fid = fopen(file);
     k = textscan(fid, '%n %n %d', 'Headerlines', 1);
     fclose(fid);
     
-    data = [ k{1} k{2} ];
+    %% The return values
+    data  = [ k{1} k{2} ];
     class = k{3};
     

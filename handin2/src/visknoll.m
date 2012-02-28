@@ -1,5 +1,5 @@
 
-%% Read files knoll-train{A,B,C}.dt and plot as 2D plots.
+%% Read files knoll{A,B,C}-train.dt and plot as 2D plots.
 
 [dataA classA] = loadknoll('knollA-train.dt');
 knollplot(dataA, classA, 'knollAtrain.eps')
