@@ -1,4 +1,4 @@
-function [data class] = loadknoll(file)
+function data = loadknoll(file)
 %% Load KNOLL from data file and return the data as a 100x2 matrix
 %% with double values and the its corresponding class in a column
 %% vector of size 100 with integer entries.
@@ -9,10 +9,7 @@ function [data class] = loadknoll(file)
 %% data is double.
 
     fid = fopen(file);
-    k = textscan(fid, '%n %n %d', 'Headerlines', 1);
+    data = cell2mat(textscan(fid, '%n %n %n', 'Headerlines', 1));
     fclose(fid);
-    
-    %% The return values
-    data  = [ k{1} k{2} ];
-    class = k{3};
+
     

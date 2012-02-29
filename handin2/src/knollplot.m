@@ -1,4 +1,4 @@
-function knollplot(data, class, outfile)
+function knollplot(data, outfile)
 %% Visualise KNOLL data, given a corresponding class vector and
 %% output the graph to the given file name.
 %%
@@ -9,10 +9,10 @@ function knollplot(data, class, outfile)
     pos = [];
     neg = [];
     for i = 1:size(data,1)
-        if class(i) == 1
-            pos = [pos; data(i,:)];
+        if data(i,3) == 1
+            pos = [pos; data(i,1:2)];
         else
-            neg = [neg; data(i,:)];
+            neg = [neg; data(i,1:2)];
         end
     end
 
