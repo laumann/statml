@@ -9,16 +9,14 @@ function knollplot(data, outfile)
     pos = [];
     neg = [];
     for i = 1:size(data,1)
-        if data(i,3) == 1
+        if data(i,3) > 0
             pos = [pos; data(i,1:2)];
         else
             neg = [neg; data(i,1:2)];
         end
     end
 
-    plot(pos(:,1), pos(:,2), 'og')
-    hold on
-    plot(neg(:,1), pos(:,2), 'or')
-    hold off
+    plot(pos(:,1), pos(:,2), 'og'); hold on
+    plot(neg(:,1), pos(:,2), 'or'); hold off
 
-    %%print -dpsc outfile
+    print('-dpsc', outfile)
