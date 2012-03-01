@@ -16,11 +16,12 @@ function y = knn(data, input, distfunc, k)
     d = sortrows(d, [1, 2]);
     d = d(1:k, 2);
     
-    %% qnd for binary -1/1:
+    %% QnD for binary -1/1:
     d = sum(d);
 
-    %% d = d/abs(d);  
+    %% if undecided, use random decision
     if d == 0
         d = sign(randn)
     end
+
     y = sign(d);
