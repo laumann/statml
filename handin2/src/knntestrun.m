@@ -7,9 +7,9 @@ function x = knntestrun(train, test, distfunc, Ks)
 %% distfunc - the function as metric
 %% Ks - Nx1 matrix of different Ks for K-NN
 %%
-%% x = index of the first k with minimal error rate
+%% x = first k with minimal error rate
 
-    %% minErr := [error-rate index-of-Ks]
+    %% minErr := [error-rate k]
     minErr = [2 -1];
     for k = Ks
         err = knntest(train, test, distfunc, k);
