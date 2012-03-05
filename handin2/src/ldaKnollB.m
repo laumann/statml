@@ -9,18 +9,20 @@ Btest=loadknoll('knollB-test.dt');
 
 [mB bB]=getdecisionbound(mu1B, mu2B, sigmaB, pcB1, pcB2);
 
-plotdecisionbound(Btrain, mu1B, mu2B, mB, bB, -2, 2, -2, 2);
+plotdecisionbound(Btrain, mu1B, mu2B, mB, bB, -2.5, 2.5, -2, 2);
 title('Knoll B Training');
 print -dpsc ldaKnollBtrain.eps;
-errTrain=ldaerror(mB, bB, Btrain);
+[errTrain margTrain]=ldaerror(mu1B, mu2B, sigmaB, pcB1, pcB2, Btrain);
 
-plotdecisionbound(Btest, mu1B, mu2B, mB, bB, -2, 2, -2, 2);
+plotdecisionbound(Btest, mu1B, mu2B, mB, bB, -2.5, 2.5, -2, 2);
 title('Knoll B Test');
-print -dpsc ldaKnollBtest.eps;
-errTest=ldaerror(mB, bB, Btest);
 
-disp(sprintf(['Knoll B: Error for training set: %f, for test set: ' ...
-              '%f \n'], errTrain, errTest));
+print -dpsc ldaKnollBtest.eps;
+[errTest margTest]=ldaerror(mu1B, mu2B, sigmaB, pcB1, pcB2, Btest);
+
+disp(sprintf('Knoll B: Error for training set: %f, for test set: %f', errTrain, errTest));
+disp(sprintf('Knoll B: Margin for training set: %f, for test set: %f', margTrain, margTest)); 
+
 
 
 
