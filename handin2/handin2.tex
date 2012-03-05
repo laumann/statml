@@ -182,16 +182,18 @@ error percentage, such an algorithm might actually find the Bayes Optimal Soluti
 %% knollB    %     %
 %% knollC    %     %
 \begin{table}
-\begin{tabular}{|l|c|r|}
+\begin{tabular}{|l|c|c|c|c|c|r|}
   \hline
-   & Training & Test \\
+  & \multicolumn{2}{|c|}{Knoll A} & \multicolumn{2}{|c|}{Knoll B} & \multicolumn{2}{|c|}{Knoll C} \\
   \hline
-  KnollA & 1\% & 3\% \\
-  KnollB & 40\% & 49\% \\
-  KnollC & 1\% & 3\% \\
+  & Training & Test & Training & Test & Training & Test \\
+  \hline
+  Errors & 1\% & 3\% & 40\% & 49\% & 1\% & 3\% \\ 
+  \hline
+  Margin & -0.242763 & -0.142026 & -1.629922 & -2.061411 & -0.002435 & -0.001425 \\
   \hline
   \end{tabular}
-  \caption{Error percentages for each of the \textsc{knoll} problems}
+  \caption{Error percentages and margins for each of the \textsc{knoll} problems}
   \label{tab:ldaknollerror}
 \end{table}
 
