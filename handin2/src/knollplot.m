@@ -6,15 +6,6 @@ function knollplot(data, outfile)
 %% (positive or negative) and plots positive in green and negative
 %% in red.
 
-    % pos = [];
-    % neg = [];
-    % for i = 1:size(data,1)
-    %     if data(i,3) > 0
-    %         pos = [pos; data(i,1:2)];
-    %     else
-    %         neg = [neg; data(i,1:2)];
-    %     end
-    % end
     [pos neg] = dividedataset(data);
 
     plot(pos(:,1), pos(:,2), 'og'); hold on

@@ -6,8 +6,7 @@ handin2.pdf: handin2.tex $(PLOTS)
 	@pdflatex handin2.tex
 
 $(PLOTS): %.pdf: %.eps
-	@echo $< -> $@
-	@epstopdf $<
+	epstopdf $<
 
 clean:
 	@rm -rfv $(PLOTS) handin2.pdf handin2.aux handin2.log
