@@ -100,8 +100,8 @@ predictor, but including more variables should improve the results.
 %% \]
 
 \begin{figure}
-\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel1.eps}}
-\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel2.eps}}
+\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel1.pdf}}
+\subfloat[\hfill]{\includegraphics[width=.5\textwidth]{src/mapsel2.pdf}}
 \caption{Plot of RMS against varying values of $\alpha$}
 \label{fig:rmsalpha}
 \end{figure}
@@ -132,22 +132,68 @@ parameters \vect{w} in the linear basis function in which $\vect{m}_N$
 and $\vect{S}_N$ are defined 
 
 \section{Linear Discriminant Analysis}
-
-Visualize the training data sets in three 2D plots.
 \begin{figure}
-  \subfloat[\textsc{knollA}]{\includegraphics[width=.33\textwidth]{src/knollAtrain.eps}}
-  \subfloat[\textsc{knollB}]{\includegraphics[width=.33\textwidth]{src/knollBtrain.eps}}
-  \subfloat[\textsc{knollC}]{\includegraphics[width=.33\textwidth]{src/knollCtrain.eps}}
+  \subfloat[\textsc{knollA}]{\includegraphics[width=.33\textwidth]{src/knollAtrain.pdf}}
+  \subfloat[\textsc{knollB}]{\includegraphics[width=.33\textwidth]{src/knollBtrain.pdf}}
+  \subfloat[\textsc{knollC}]{\includegraphics[width=.33\textwidth]{src/knollCtrain.pdf}}
   \caption{Visualisation of the training data for each of the \textsc{knoll} problems}
+  \label{fig:knolldata}
 \end{figure}
 
+\subsection{Observations regarding the data}
+\begin{figure}
+  
+    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtrain.pdf}}
+    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtest.pdf}}
 
-Apply LDA to the training data, report accuracies of the classifier on
-the training as well as on the test sets. Explain the results. Discuss
-similarities and differences in performance on three data sets. Could
-a non-linear method do better?
+    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtrain.pdf}}
+    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtest.pdf}}
 
-Implement LDA algorithm by hand.
+    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtrain.pdf}}
+    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtest.pdf}}
+  
+  \caption{Visualisation of the training data for each of the \textsc{knoll} problems}
+  \label{fig:ldaknollplots}
+\end{figure}
+
+In fig. ~\ref{fig:knolldata} you can see plots of all three training data sets. It is obvious
+that while KnollA and KnollC contain well-separable groups of data points, the distributions in KnollB
+seem to overlap. We can therefore expect that LDA will performa relatively well on KnollA and KnollB, whereas
+the results for KnollB will likely be more erratic. 
+
+\subsection{Results of LDA}
+If we run LDA on all three data sets and plot them with their respective decision boundaries (fig. ~\ref{fig:ldaknollplots}), we find 
+that the algorithm indeed performs well on the A and C sets. In table ~\ref{tab:ldaknollerror} we can see that although the error count is greater than zero for all 
+training and test sets, which is also implied by the margin always being slightly negative, the number of errors
+is relatively low for both training and test sets. The training set performs slightly better than the test set in both 
+cases, which is to be expected, but there is not over- or underfitting problem.
+
+For KnollB, however, the results are much worse. The properties of the underlying distribution simply
+do not allow them to be separated by a straight line, which results in a high error percentage and a highly negative margin.
+Since the distributions in B overlap to a high degree, it is generally not possible to find a function of any kind
+to separate both classes accurately. However, a Quadratic Discriminant Analysis might be able to find out that one class
+concentrates a lot more in a certain range, whereas the other one has a higher variance and is therefore spread out more widely.
+It could therefore assign all points in this range to one class and the rest to the other. While this will still result in a high
+error percentage, such an algorithm might actually find the Bayes Optimal Solution.
+
+%% TODO Table of knoll{A,B,C} error rates, for training and test data.
+%%         train test
+%% knollA    %     %
+%% knollB    %     %
+%% knollC    %     %
+\begin{table}
+\begin{tabular}{|l|c|r|}
+  \hline
+   & Training & Test \\
+  \hline
+  KnollA & 1\% & 3\% \\
+  KnollB & 40\% & 49\% \\
+  KnollC & 1\% & 3\% \\
+  \hline
+  \end{tabular}
+  \caption{Error percentages for each of the \textsc{knoll} problems}
+  \label{tab:ldaknollerror}
+\end{table}
 
 \section{Nearest Neighbor Classification}
 
@@ -159,6 +205,20 @@ training data sets. Report accuracy on corresponding sets for $k =
 in performance on the three data sets. Compare results to LDA results.
 
 Hand in: classifier source code, results, short discussion.
+
+Observations
+
+%% Why it makes sense to compute error rate for the training
+We can compute an accuracy for the $k$-NN on the same training data, which for $k = 1$ always gives an error degree of zero, because the nearest neighbour of a given point in the data set is the point itself. But for higher values of $k$, we can get errors for points surrounded by points from the opposite class.
+
+%% TODO Table of knoll{A,B,C} error rates, for respectively the training data and the test data.
+%%
+%%    knollA     knollB     knollC
+%% k  train test train test train test
+%% 1    %    %     %     %    %    %
+%% .
+%% .
+%% 9   %     %     %     %    %    %
 
 \subsection{Changing the Metric}
 
