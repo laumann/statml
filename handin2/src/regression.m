@@ -36,7 +36,7 @@ RMS = @(params, testset) sqrt(sum((test_target - testset*params).^2)/T);
 design1 = [ ones(N,1) train(:,4) train(:,7) train(:,8) train(:,9) ];
 test1   = [ ones(T,1)  test(:,4)  test(:,7)  test(:,8)  test(:,9) ];
 
-%% Selection 2 consists of:
+%% Selection 2
 design2 = [ ones(N,1) train(:,8) ];
 test2   = [ ones(T,1)  test(:,8) ];
 
@@ -76,6 +76,8 @@ alphas = -0.1:.001:.02;
 %% Selection 1
 RMS_MAP1 = @(alpha) RMS(mapestimate(design1, target, alpha), test1);
 
+min_RMS_MAP1 = min(arrayfun(RMS_MAP1, alphas))
+
 plot(alphas, arrayfun(RMS_MAP1, alphas), '-b'); hold on
 plot(alphas, arrayfun(@(x) RMS_ML1, alphas), '-r')
 xlabel('$\alpha$', 'interpreter', 'latex')
@@ -104,6 +106,8 @@ print -dpsc 'mapsel1.eps'
 alphas = -1:.001:.1;
 
 RMS_MAP2 = @(alpha) RMS(mapestimate(design2,target,alpha), test2);
+
+min_RMS_MAP2 = min(arrayfun(RMS_MAP2, alphas))
 
 plot(alphas, arrayfun(RMS_MAP2, alphas), 'b'); hold on
 plot(alphas, arrayfun(@(x) RMS_ML2, alphas), 'r')

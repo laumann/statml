@@ -17,6 +17,10 @@
 \newcommand{\vect}[1]{\ensuremath{\boldsymbol{\mathbf{#1}}}\xspace}
 %%\newcommand{\M}{\ensuremath{\begin{pmatrix}100 & 0 
 
+\newcommand{\knollA}{\textsc{knollA}\xspace}
+\newcommand{\knollB}{\textsc{knollB}\xspace}
+\newcommand{\knollC}{\textsc{knollC}\xspace}
+
 %% %% Uncomment these lines to get a box around all figures
 %% \usepackage{float}
 %% \floatstyle{boxed}
@@ -76,8 +80,8 @@ $200\times 2$. Training the model on the same training data yields:
 \subsubsection{Discussion}
 Just looking at the root mean square values of the two selections, it
 appears that $S_1$ performs better than $S_2$, but not by a lot. This
-suggests that either the variable `Abdomen 2' is the most descriptive
-in terms of body, or that the linear model simply is a poor fit no
+could suggest that either the variable `Abdomen 2' is the most descriptive
+in terms of body fat, or that the linear model simply is a poor fit no
 matter how many variables we include. It could be a combination of the
 two.
 
@@ -106,13 +110,22 @@ predictor, but including more variables should improve the results.
 \label{fig:rmsalpha}
 \end{figure}
 
+For $S_1$ the lowest root mean square value is 4.3614, the same as the
+ML solution differing on the second digit. The difference is larger
+for $S_2$ in which we obtain the value 5.1071, differing from the ML
+solution on the first digit.
+
 In fig.~\ref{fig:rmsalpha} two plots are found of the root mean square
 values for varying values of $\alpha$. In both plots we set $\beta =
 1$. The RMS value of the ML solution is plotted as a straight line.
 
-We can observe for both plots that when $\alpha = 0$, we obtain the
-same $\mathrm{RMS}$ error for the MAP estimate as for the ML
-solution. This is expected and demonstrates that when our prior
+%%Apply model to test set and compute RMS error for different values of the precision parameter $\alpha$.
+
+\subsubsection{Comparison}
+
+Firstly, we can observe for both plots that when $\alpha = 0$, we
+obtain the same $\mathrm{RMS}$ error for the MAP estimate as for the
+ML solution. This is expected and demonstrates that when our prior
 precision parameters are set to zero, the MAP estimate becomes the ML
 estimate.
 
@@ -123,7 +136,8 @@ fig.~\ref{fig:rmsalpha}(b) the plot for $S_2$ similarly gives us that
 the $\mathrm{RMS}_\mathrm{MAP}$ error is lower in the interval
 $[-0.844,0]$.
 
-%%Apply model to test set and compute RMS error for different values of the precision parameter $\alpha$.
+The intervals in which the MAP estimate outperforms the ML estimate
+are very small, and the obtained difference likewise small.
 
 \subsection{Theory}
 
@@ -131,13 +145,14 @@ Verify result in equation (3.49) for the posterior distribution of the
 parameters \vect{w} in the linear basis function in which $\vect{m}_N$
 and $\vect{S}_N$ are defined 
 
+\newpage
 \section{Linear Discriminant Analysis}
 
 Visualize the training data sets in three 2D plots.
 \begin{figure}
-  \subfloat[\textsc{knollA}]{\includegraphics[width=.33\textwidth]{src/knollAtrain.eps}}
-  \subfloat[\textsc{knollB}]{\includegraphics[width=.33\textwidth]{src/knollBtrain.eps}}
-  \subfloat[\textsc{knollC}]{\includegraphics[width=.33\textwidth]{src/knollCtrain.eps}}
+  \subfloat[\knollA]{\includegraphics[width=.33\textwidth]{src/knollAtrain.eps}}
+  \subfloat[\knollB]{\includegraphics[width=.33\textwidth]{src/knollBtrain.eps}}
+  \subfloat[\knollC]{\includegraphics[width=.33\textwidth]{src/knollCtrain.eps}}
   \caption{Visualisation of the training data for each of the \textsc{knoll} problems}
 \end{figure}
 
@@ -149,16 +164,39 @@ a non-linear method do better?
 
 Implement LDA algorithm by hand.
 
+\newpage
 \section{Nearest Neighbor Classification}
 
 \subsection{Nearest Neighbor Classification with Euclidian Metric}
 
-Implement $k$-NN. Train for all three \textsc{knoll} problems using
-training data sets. Report accuracy on corresponding sets for $k =
-1,2,3,\dots,9$. Explain results; discuss similarities and differences
-in performance on the three data sets. Compare results to LDA results.
+The results of the runs of the classifier for different values of $k$
+are found in table~\ref{tbl:results1}. The bottom field of each column
+indicates the $k$ for which the classifier gave the lowest error rate.
 
-Hand in: classifier source code, results, short discussion.
+The error rate is computed by adding up the errors made by the
+classifier, and then dividing by the test set size. As we have the
+actual class of a given point (for both test and training sets), this
+is straightforward to implement.
+
+As a general note, classifying the training set itself will always
+give us $k = 1$ as the optimal value, which makes sense, because the
+closest point to a point in both the training and test sets is the
+point itself, hence the distance will always be zero (and the
+classification perfect). But it's interesting to see how the
+classifier behaves when more than one neighbor has to be
+considered. If a point belonging to one class is surrounded by points
+in the other class, then it will be misclassified. As can be seen from
+the results, the optimal value for $k$ in all the training sets is $3$,
+although it should be noted that the error rate for $k = 3,5$ and $7$
+in \knollA are all $0.1$.
+
+In \knollA, the error rates are very low ($< 0.05$) for all the values of $k$,
+being lowest when $k = 3$. In \knollB and \knollC the error rates
+increase dramatically ($\geq 0.19$), for \knollB the lowest error rates are obtained
+when $k = 5$ or $7$. In \knollC the best results are unanimously
+obtained when $k = 1$.
+
+%% Hand in: classifier source code, results, short discussion.
 %%% Table
 %%% k    knollA    knollB    knollC
 %%% 1      %                   %
@@ -166,10 +204,11 @@ Hand in: classifier source code, results, short discussion.
 %%% 5
 %%% 7
 %%% 9      %                   %
-\begin{figure}[h!]
+\begin{table}
   \centering
   \begin{tabular}{c | c|c | c|c | c|c}
-    $k$ & \multicolumn{2}{c|}{\textsc{knollA}} & \multicolumn{2}{c|}{\textsc{knollB}} & \multicolumn{2}{c}{\textsc{knollC}}\\ \hline
+    \hfill & \multicolumn{2}{c|}{\knollA} & \multicolumn{2}{c|}{\knollB} & \multicolumn{2}{c}{\knollC}\\
+    $k$ & test & train & test & train & test & train\\\hline
     1 & 0.04 &   -  & 0.23 &   -  & 0.20 &   - \\
     3 & 0.02 & 0.01 & 0.20 & 0.13 & 0.32 & 0.16\\
     5 & 0.03 & 0.01 & 0.19 & 0.19 & 0.34 & 0.21\\
@@ -177,7 +216,9 @@ Hand in: classifier source code, results, short discussion.
     9 & 0.03 & 0.02 & 0.23 & 0.20 & 0.46 & 0.33\\\hline\hline
     \hfill & 3 & 3  &   5  &   3  &   1  &   3 
   \end{tabular}
-\end{figure}
+  \caption{Table of results for $k$-NN classifier on all three \textsc{knoll} problems.}
+  \label{tbl:results1}
+\end{table}
 
 \subsection{Changing the Metric}
 
@@ -195,7 +236,7 @@ need to verify $\forall \vect{x},\vect{y}\in \mathbb{R}^2$ that
   \item $\forall \vect{x},\vect{y},\vect{z} \in \mathbb{R}^2 : d(\vect{x},z) \leq d(\vect{x},\vect{y}) + d(\vect{y},\vect{z})$.
 \end{inparaenum}
 
-\subsubsection{Revised proof --- basic observations}
+\subsubsection{Proof}
 
 We need only to observe that $\vect{M}$ is a projection $m : \mathbb{R}^2 \rightarrow \mathbb{R}^2$, i.e.\ onto $\mathbb{R}^2$ itself, given by $m(\vect{x}) = \vect{M}\vect{x}$. This immediately gives us all the properties we need, because $L_2$ is itself a (complete) metric on $\mathbb{R}^2$.
 
@@ -256,9 +297,9 @@ For instance, if we let $\vect{x},\vect{y},\vect{z} \in \mathbb{R}^2$ and $\vect
 %% \end{align}
 
 \subsubsection{Results}
-Using $d$ as metric on \textsc{knollC} we obtain the following results.
+Using $d$ as metric on \knollC we obtain the following results.
 
-\begin{figure}[h!]
+\begin{table}
   \centering
   \begin{tabular}{c | c|c }
     $k$ & training set & test set\\ \hline
@@ -269,7 +310,7 @@ Using $d$ as metric on \textsc{knollC} we obtain the following results.
     9 & 0.03 & 0.03 \\\hline\hline
     \hfill & 3 & 3
   \end{tabular}
-\end{figure}
+\end{table}
 
 The error rates drop dramatically. We could visualize with a plot?
 

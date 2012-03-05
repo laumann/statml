@@ -7,6 +7,6 @@ knollplot(dataA, 'knollAtrain.eps')
 dataB = loadknoll('knollB-train.dt');
 knollplot(dataB, 'knollBtrain.eps')
 
-dataC = loadknoll('knollB-train.dt');
+dataC = loadknoll('knollC-train.dt');
 knollplot(dataC, 'knollCtrain.eps')
 
