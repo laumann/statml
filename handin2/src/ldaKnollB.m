@@ -11,15 +11,16 @@ Btest=loadknoll('knollB-test.dt');
 
 plotdecisionbound(Btrain, mu1B, mu2B, mB, bB, -2, 2, -2, 2);
 title('Knoll B Training');
-print -color ldaKnollBtrain.eps;
+print -dpsc ldaKnollBtrain.eps;
 errTrain=ldaerror(mB, bB, Btrain);
 
 plotdecisionbound(Btest, mu1B, mu2B, mB, bB, -2, 2, -2, 2);
 title('Knoll B Test');
-print -color ldaKnollBtest.eps;
+print -dpsc ldaKnollBtest.eps;
 errTest=ldaerror(mB, bB, Btest);
 
-printf('Knoll B: Error for training set: %f, for test set: %f \n', errTrain, errTest);
+disp(sprintf(['Knoll B: Error for training set: %f, for test set: ' ...
+              '%f \n'], errTrain, errTest));
 
 
 

@@ -148,43 +148,44 @@ and $\vect{S}_N$ are defined
 \newpage
 \section{Linear Discriminant Analysis}
 \begin{figure}
-  \subfloat[\textsc{knollA}]{\includegraphics[width=.33\textwidth]{src/knollAtrain.pdf}}
-  \subfloat[\textsc{knollB}]{\includegraphics[width=.33\textwidth]{src/knollBtrain.pdf}}
-  \subfloat[\textsc{knollC}]{\includegraphics[width=.33\textwidth]{src/knollCtrain.pdf}}
+  \subfloat[\knollA]{\includegraphics[width=.33\textwidth]{src/knollAtrain.pdf}}
+  \subfloat[\knollB]{\includegraphics[width=.33\textwidth]{src/knollBtrain.pdf}}
+  \subfloat[\knollC]{\includegraphics[width=.33\textwidth]{src/knollCtrain.pdf}}
   \caption{Visualisation of the training data for each of the \textsc{knoll} problems}
   \label{fig:knolldata}
 \end{figure}
 
 \subsection{Observations regarding the data}
 \begin{figure}
-  
-    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtrain.pdf}}
-    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtest.pdf}}
 
-    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtrain.pdf}}
-    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtest.pdf}}
+  \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtrain.pdf}}
+  \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollAtest.pdf}}
 
-    \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtrain.pdf}}
-    \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtest.pdf}}
-  
+  \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtrain.pdf}}
+  \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollBtest.pdf}}
+
+  \subfloat[as]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtrain.pdf}}
+  \subfloat[df]{\includegraphics[width=.5\textwidth]{src/ldaKnollCtest.pdf}}
+
   \caption{Visualisation of the training data for each of the \textsc{knoll} problems}
   \label{fig:ldaknollplots}
 \end{figure}
 
-In fig. ~\ref{fig:knolldata} you can see plots of all three training data sets. It is obvious
-that while KnollA and KnollC contain well-separable groups of data points, the distributions in KnollB
-seem to overlap. We can therefore expect that LDA will performa relatively well on KnollA and KnollB, whereas
-the results for KnollB will likely be more erratic. 
+In fig.~\ref{fig:knolldata} you can see plots of all three training data sets. It is obvious
+that while \knollA and \knollC contain well-separable groups of data points, the distributions in \knollB
+seem to overlap. We can therefore expect that LDA will perform relatively well on \knollA and \knollB, whereas
+the results for \knollB will likely be more erratic. 
 
 \subsection{Results of LDA}
-If we run LDA on all three data sets and plot them with their respective decision boundaries (fig. ~\ref{fig:ldaknollplots}), we find 
-that the algorithm indeed performs well on the A and C sets. In table ~\ref{tab:ldaknollerror} we can see that although the error count is greater than zero for all 
+If we run LDA on all three data sets and plot them with their respective decision boundaries (fig.~\ref{fig:ldaknollplots}), we find 
+that the algorithm indeed performs well on the A and C sets. In table~\ref{tab:ldaknollerror} we can see that although the error count is greater than zero for all 
 training and test sets, which is also implied by the margin always being slightly negative, the number of errors
 is relatively low for both training and test sets. The training set performs slightly better than the test set in both 
 cases, which is to be expected, but there is not over- or underfitting problem.
 
-For KnollB, however, the results are much worse. The properties of the underlying distribution simply
+For \knollB, however, the results are much worse. The properties of the underlying distribution simply
 do not allow them to be separated by a straight line, which results in a high error percentage and a highly negative margin.
+
 Since the distributions in B overlap to a high degree, it is generally not possible to find a function of any kind
 to separate both classes accurately. However, a Quadratic Discriminant Analysis might be able to find out that one class
 concentrates a lot more in a certain range, whereas the other one has a higher variance and is therefore spread out more widely.
@@ -196,15 +197,15 @@ error percentage, such an algorithm might actually find the Bayes Optimal Soluti
 %% knollA    %     %
 %% knollB    %     %
 %% knollC    %     %
-\begin{table}
-\begin{tabular}{|l|c|r|}
-  \hline
-   & Training & Test \\
-  \hline
-  KnollA & 1\% & 3\% \\
-  KnollB & 40\% & 49\% \\
-  KnollC & 1\% & 3\% \\
-  \hline
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l|c|r}
+    & Training & Test \\
+    \hline
+    \knollA & 1\% & 3\% \\
+    \knollB & 40\% & 49\% \\
+    \knollC & 1\% & 3\% \\
+    \hline
   \end{tabular}
   \caption{Error percentages for each of the \textsc{knoll} problems}
   \label{tab:ldaknollerror}

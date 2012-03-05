@@ -20,4 +20,3 @@ divisor=mu1(1)*isigma(2,1)+mu1(2)*isigma(2,2)-mu2(1)*isigma(2,1)-mu2(2)*isigma(2
 b=b/(-divisor);
 a=a/(-divisor);
 
-endfunction

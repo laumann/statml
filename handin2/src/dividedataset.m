@@ -10,6 +10,6 @@ function [class1 class2] = dividedataset (A)
             class1=[class1;A(i,1),A(i,2)];
         else
             class2=[class2;A(i,1),A(i,2)];
-        endif
+        end
     end
-endfunction
+

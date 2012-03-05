@@ -11,15 +11,16 @@ Ctest=loadknoll('knollC-test.dt');
 
 plotdecisionbound(Ctrain, mu1C, mu2C, mC, bC, -.1, .1, -2, 2);
 title('Knoll C Training');
-print -color ldaKnollCtrain.eps;
+print -dpsc ldaKnollCtrain.eps;
 errTrain=ldaerror(mC, bC, Ctrain);
 
 plotdecisionbound(Ctest, mu1C, mu2C, mC, bC, -.1, .1, -2, 2);
 title('Knoll C Test');
-print -color ldaKnollCtest.eps;
+print -dpsc ldaKnollCtest.eps;
 errTest=ldaerror(mC, bC, Ctest);
 
-printf('Knoll C: Error for training set: %f, for test set: %f \n', errTrain, errTest);
+disp(sprintf(['Knoll C: Error for training set: %f, for test set: ' ...
+              '%f \n'], errTrain, errTest));
 
 
 

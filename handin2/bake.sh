@@ -1,1 +1,4 @@
-for f in $(ls src/*.eps); do epstopdf $f; done
+for f in $(ls src/*.eps); do 
+    echo "Converting: $f -> ${f%.*}.pdf"
+    epstopdf $f;
+done

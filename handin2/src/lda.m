@@ -27,7 +27,7 @@ function [mean1 mean2 sigma pc1 pc2] = lda(A)
     for i=1:length(second)
         difference=mean2-second(i,:);
         product=difference'*difference;
-        secondsum=secondsum.+product;
+        secondsum=secondsum+product;
     end
 
     sigma=(firstsum+secondsum)/(length(A)-2);
@@ -38,4 +38,3 @@ function [mean1 mean2 sigma pc1 pc2] = lda(A)
     pc1=length(first)/length(A);
     pc2=length(second)/length(A);
 
-endfunction

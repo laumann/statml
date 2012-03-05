@@ -14,7 +14,7 @@ function plotdecisionbound (A, muA, muB, a, b, xmin, xmax, ymin, ymax)
         xmax=2.5;
 	ymin=-2;
         ymax=2;
-    endif
+    end
 
     %divide data set into the two classes
     [first second]=dividedataset(A);
@@ -35,7 +35,6 @@ function plotdecisionbound (A, muA, muB, a, b, xmin, xmax, ymin, ymax)
 
     %adjust zoom and add legend
     axis([xmin,xmax,ymin,ymax]);
-    xlabel('x1');
-    ylabel('x2');
-    
-endfunction
+    xlabel('$x_1$', 'interpreter', 'latex');
+    ylabel('$x_2$', 'interpreter', 'latex');
+
