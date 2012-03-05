@@ -91,7 +91,7 @@ hold off
 print -dpsc 'mapsel1.eps'
 
 
-%% Q:For what values of alpha of the prior precision (alpha) does the
+%% Q:For what values of the prior precision (alpha) does the
 %% RMS error go below the RMS of the ML solution?
 %% A: Compute the RMS - RMS_ML1
 %%
