@@ -8,6 +8,9 @@ function [a b] = getdecisionbound (mu1, mu2, sigma, pc1, pc2)
 %%
 %% Returns the parameters of a linear function x2(x1)=a*x1+b
 
+
+%% All calculations result from equaling the two discrimination functions and rearranging the result
+%% into a function x2(x1).
 isigma=inv(sigma);
 
 b=-0.5*(mu1'*isigma*mu1)+log(pc1)+0.5*(mu2'*isigma*mu2)-log(pc2);
