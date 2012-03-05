@@ -15,7 +15,14 @@
 \date{}
 
 \newcommand{\vect}[1]{\ensuremath{\boldsymbol{\mathbf{#1}}}\xspace}
-%%\newcommand{\M}{\ensuremath{\begin{pmatrix}100 & 0 
+
+%% For readability in question 1.3
+\newcommand{\Target}{\vect{\mathsf{T}}}
+\newcommand{\vPhi}{\vect{\Phi}}
+\newcommand{\vw}{\vect{w}}
+\newcommand{\Szero}{\vect{S}_0}
+\newcommand{\mzero}{\vect{m}_0}
+\newcommand{\target}{\vect{\mathsf{t}}}
 
 \newcommand{\knollA}{\textsc{knollA}\xspace}
 \newcommand{\knollB}{\textsc{knollB}\xspace}
@@ -33,12 +40,13 @@
 
 \subsection{Maximum Likelihood solution}
 
-Use linear model
+We are using a linear model:
 \[
 y(\vect{x},\vect{w}) = w_0 + w_1 x_1 + w_2 x_2 + \dots + w_D x_D
 \]
-and for the $D$ variables we let $\phi_i(\vect{x}) = x_i$ for
-$i = 1,\dots,D$ and $\phi_0(\vect{x}) = 1$. 
+and we let $\phi_i(\vect{x}) = x_i$ for $i = 1,\dots,D$ and
+$\phi_0(\vect{x}) = 1$.
+
 \subsubsection{Selection 1}
 
 For our first selection $S_1$ our design matrix becomes a $200\times
@@ -139,11 +147,66 @@ $[-0.844,0]$.
 The intervals in which the MAP estimate outperforms the ML estimate
 are very small, and the obtained difference likewise small.
 
+\newpage
 \subsection{Theory}
 
-Verify result in equation (3.49) for the posterior distribution of the
-parameters \vect{w} in the linear basis function in which $\vect{m}_N$
-and $\vect{S}_N$ are defined 
+We have from CB (1.44) that:
+\[
+p(\vect{w}|\vect{\mathsf{t}}) \propto p(\vect{\mathsf{t}}|\vect{w})\times p(\vect{w}),
+\]
+which reads that the probability distribution of the parameters given
+the target vector $\vect{\mathsf{t}}$ is proportional to the
+probability of the target vector given the parameters multiplied by
+the probability of the parameters.
+
+This is also Bayes' Theorem in words, namely the posterior
+distribution is proportional to the likelihood times the prior.
+
+With this in mind we state the likelihood function defined in CB
+(3.10)
+\begin{align*}
+  p(\target |\vect{X}, \vect{w}, \beta) &= \prod_{n=1}^N \mathcal{N}(t_n | \vect{w}^T\vect{\phi}(\vect{x}_n), \beta^{-1})\label{eq:likelihood}\\
+%%  \intertext{which we know from the lecture slides can be written as}
+  &= \mathcal{N}(\vect{\mathsf{T}} | \vect{\Phi}\vect{w}, \beta^{-1}\vect{I}) \qquad\text{(from the lecture slides)}
+\end{align*}
+and the prior is given by:
+\[
+  p(\vect{w}) = \mathcal{N}(\vect{w}|\vect{m}_0,\vect{S}_0).
+\]
+
+As is written in CB page 153, the product of the two Gaussians will
+again be Gaussian, but we want to verify the result of the
+multiplication, so we want to `complete the square' in the
+exponential, and then find the normalization coefficient using the
+standard result for a normalized Gaussian.
+
+\begin{align}
+  \nonumber  & \exp\left\{-\frac{1}{2}(\Target - \vPhi\vw)^T \beta\vect{I} (\Target -
+  \vPhi\vw)\right\} \times \exp\left\{ -\frac{1}{2}(\vw -
+  \mzero)^T\Szero^{-1}(\vw - \mzero)\right\}\\
+  \nonumber = & \exp\left\{-\frac{\beta}{2}(\Target - \vPhi\vw)^T (\Target -
+  \vPhi\vw)\right\} \times \exp\left\{ -\frac{1}{2}(\vw -
+  \mzero)^T\Szero^{-1}(\vw - \mzero)\right\}\\
+  = & \exp\left\{-\frac{\beta}{2}(\Target - \vPhi\vw)^T (\Target -
+  \vPhi\vw) -\frac{1}{2}(\vw - \mzero)^T\Szero^{-1}(\vw - \mzero)\right\}\label{eq:expgauss}
+\end{align}
+
+Multiplying out the expression in \eqref{eq:expgauss} we find (excluding the exp part):
+\begin{align}
+  %%= & -\frac{\beta}{2}(\Target - \vPhi\vw)^T (\Target - \vPhi\vw) -\frac{1}{2}(\vw - \mzero)^T\Szero^{-1}(\vw - \mzero)\right\}\\
+\nonumber = & -\frac{1}{2}\left(\beta\Target^T\Target - \beta\Target\vPhi\vw - \beta\vw^T\vPhi^T\Target + \beta\vw^T\vPhi^T\vPhi\vw + \vw^T\Szero^{-1}\vw - \vw^T\Szero^{-1}\mzero - \mzero^T\Szero^{-1}\vw + \mzero^T\Szero^{-1}\mzero \right)\\
+\intertext{Rearranging in terms of \vw and $\vw^T$ gives us:}
+= & -\frac{1}{2}\left(\vw^T(\beta\vPhi^T\vPhi + \Szero^{-1})\vw - \vw^T(\beta\vPhi^T\Target + \Szero^{-1}\mzero) - (\beta\Target^T\vPhi + \mzero^T\Szero^{-1})\vw + \mzero^T\Szero^{-1}\mzero + \beta\Target^T\Target \right)\label{eq:sqalmostcomplete}
+\end{align}
+The last two terms in \eqref{eq:sqalmostcomplete} we can ignore, because they are independent of \vw and we will treat them as constant. The expression can be simplified if we set $\vect{A} = \beta\vPhi^T\vPhi + \Szero^{-1}$ and $\vect{B} = \beta\vPhi^T\Target + \Szero^{-1}\mzero$. We also make use of the fact that $(\beta\Target^T\vPhi + \mzero^T\Szero^{-1}) = (\beta\vPhi^T\Target + \Szero^{-1}\mzero)^T = \vect{B}^T$, i.e.\ that $\Szero$ is symmetric, and correspondingly for its inverse it holds that $(\Szero^{-1})^T = \Szero^{-1}$.
+\begin{align*}
+  \eqref{eq:sqalmostcomplete} &= -\frac{1}{2}\left(\vw^T\vect{A}\vw - \vw^T\vect{B} - \vect{B}^T\vw \right)\\
+  & = -\frac{1}{2}(\vw - \vect{A}^{-1}\vect{B})^T\vect{A}(\vw - \vect{A}^{-1}\vect{B})\\
+\intertext{from which we can clearly see that $\vect{S}_N^{-1} = \vect{A}$ and $\vect{m}_N = \vect{A}^{-1}\vect{B} = \vect{S}_N(\beta\vPhi^T\vPhi + \Szero^{-1})$}
+& = -\frac{1}{2}(\vw - \vect{m}_N)^T\vect{S}_N(\vw - \vect{m}_N)
+\end{align*}
+which is the result that we wanted. Note also we've made use of the fact that $\vect{S}_N$ is symmetric. This is true because $\vPhi^T\vPhi$ and $\Szero^{-1}$ both are symmetric and any given linear combination of symmetric matrices will itself be symmetric.
+
 
 \newpage
 \section{Linear Discriminant Analysis}

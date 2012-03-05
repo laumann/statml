@@ -8,5 +8,11 @@ handin2.pdf: handin2.tex $(PLOTS)
 $(PLOTS): %.pdf: %.eps
 	epstopdf $<
 
+
 clean:
-	@rm -rfv $(PLOTS) handin2.pdf handin2.aux handin2.log
+	@rm -rfv handin2.aux handin2.log
+
+clean-all: clean
+	@rm -rfv $(PLOTS) handin2.pdf 
+
+.PHONY: clean clean-all
