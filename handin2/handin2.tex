@@ -177,7 +177,7 @@ and the prior is given by:
 As is written in CB page 153, the product of the two Gaussians will
 again be Gaussian, but we want to verify the result of the
 multiplication, so we want to `complete the square' in the
-exponential, and then find the normalization coefficient using the
+exponential. In order to verify the result we would then need to find the normalization coefficient using the
 standard result for a normalized Gaussian.
 
 \begin{align}
@@ -241,7 +241,7 @@ the results for \knollB will likely be more erratic.
 
 \subsection{Results of LDA}
 If we run LDA on all three data sets and plot them with their respective decision boundaries (fig.~\ref{fig:ldaknollplots}), we find 
-that the algorithm indeed performs well on the A and C sets. In table~\ref{tab:ldaknollerror} we can see that although the error count is greater than zero for all 
+that the algorithm indeed performs well on the \knollA and \knollC sets. In table~\ref{tab:ldaknollerror} we can see that although the error count is greater than zero for all 
 training and test sets, which is also implied by the margin always being slightly negative, the number of errors
 is relatively low for both training and test sets. The training set performs slightly better than the test set in both 
 cases, which is to be expected, but there is not over- or underfitting problem.
@@ -249,24 +249,19 @@ cases, which is to be expected, but there is not over- or underfitting problem.
 For \knollB, however, the results are much worse. The properties of the underlying distribution simply
 do not allow them to be separated by a straight line, which results in a high error percentage and a highly negative margin.
 
-Since the distributions in B overlap to a high degree, it is generally not possible to find a function of any kind
-to separate both classes accurately. However, a Quadratic Discriminant Analysis might be able to find out that one class
-concentrates a lot more in a certain range, whereas the other one has a higher variance and is therefore spread out more widely.
+Since the distributions in \knollB overlap to a high degree, it is generally not possible to find a function of any kind
+to separate both classes accurately. However, a Quadratic Discriminant Analysis might be able to adapt to the fact that one class
+is more concentrated in $-0.5 \leq x_1 \leq 0.5$, whereas the other one has a higher variance and is therefore spread out more widely.
 It could therefore assign all points in this range to one class and the rest to the other. While this will still result in a high
-error percentage, such an algorithm might actually find the Bayes Optimal Solution.
+error percentage, such an algorithm might find the Bayes Optimal Solution or a good approximation.
 
-%% TODO Table of knoll{A,B,C} error rates, for training and test data.
-%%         train test
-%% knollA    %     %
-%% knollB    %     %
-%% knollC    %     %
 \begin{table}[h!]
   \centering
   \begin{tabular}{l|c|c|c|c|c|c}
     & \multicolumn{2}{c|}{\knollA} & \multicolumn{2}{|c|}{\knollB} & \multicolumn{2}{|c}{\knollC} \\
     & Training & Test & Training & Test & Training & Test \\
     \hline
-    Errors & 1\% & 3\% & 40\% & 49\% & 1\% & 3\% \\ 
+    Errors & 0.01 & 0.03 & 0.40 & 0.49 & 0.01 & 0.03 \\ 
     Margin & -0.242763 & -0.142026 & -1.629922 & -2.061411 & -0.002435 & -0.001425 \\
   \end{tabular}
   \caption{Error percentages and margins for each of the \textsc{knoll} problems}
@@ -325,23 +320,18 @@ obtained when $k = 1$.
     9 & 0.03 & 0.02 & 0.23 & 0.20 & 0.46 & 0.33\\\hline\hline
     \hfill & 3 & 3  &   5  &   3  &   1  &   3 
   \end{tabular}
-  \caption{Table of results for $k$-NN classifier on all three \textsc{knoll} problems.}
+  \caption{Table of error percentages for $k$-NN classifier on all three \textsc{knoll} problems.}
   \label{tbl:results1}
 \end{table}
-
-Observations
 
 %% Why it makes sense to compute error rate for the training
 We can compute an accuracy for the $k$-NN on the same training data, which for $k = 1$ always gives an error degree of zero, because the nearest neighbour of a given point in the data set is the point itself. But for higher values of $k$, we can get errors for points surrounded by points from the opposite class.
 
-%% TODO Table of knoll{A,B,C} error rates, for respectively the training data and the test data.
-%%
-%%    knollA     knollB     knollC
-%% k  train test train test train test
-%% 1    %    %     %     %    %    %
-%% .
-%% .
-%% 9   %     %     %     %    %    %
+Both LDA and $k$-NN perform very well on \knollA, as would be expected because the points of the two classes seem cleanly separated in visualisation (fig.~\ref{fig:knolldata}). They also both perform quite bad on \knollB, but here $k$-NN outperforms LDA, because it only misclassifies about half as many points as does the LDA. This seems reasonable, because $k$-NN is able to to make use of the fact that the range of $-0.5 \leq x_1 \leq 0.5$ is more densely populated by points of one class, whereas outside of this range the other class is more dominant. This is the kind of distinction that cannot be achieved by a linear decision boundary.
+
+On \knollC, on the other hand, LDA clearly outperforms $k$-NN, achieving near perfect results, while $k$-NN only performs about as good as it does for \knollB. The data in \knollC is such that the separation induced by a linear decision boundary gives a higher accuracy than just observing your $k$ nearest neighbours. In other words, a portion of the points lie so close to the decision boundary that they are geometrically closer to the points in the opposite class than points of their own class.
+
+Another comment one could make in terms of computational performance, is that $k$-NN suffers from the fact that distances must be recomputed for every new point which for a large data set means a lot of computation. LDA has a overhead just in the training phase when computing $\vect{\mu}_1$, $\vect{\mu}_2$ and their common covariance \vect{\Sigma}---after that classification becomes simply a few multiplications and additions, which is nowhere near as computationally demanding as $k$-NN.
 
 \subsection{Changing the Metric}
 
@@ -427,17 +417,23 @@ Using $d$ as metric on \knollC we obtain the results shown in table~\ref{tbl:kno
   \begin{tabular}{c | c|c }
     $k$ & training set & test set\\ \hline
     1 & 0.04 &   - \\
-    3 & 0.02 & 0.02\\
-    5 & 0.03 & 0.03\\ 
-    7 & 0.04 & 0.04\\ 
-    9 & 0.03 & 0.03 \\\hline\hline
+    3 & 0.02 & 0.01\\
+    5 & 0.03 & 0.01\\ 
+    7 & 0.04 & 0.01\\ 
+    9 & 0.03 & 0.02 \\\hline\hline
     \hfill & 3 & 3
   \end{tabular}
   \caption{Results for \knollC using $d$ as metric}
   \label{tbl:knollCd}
 \end{table}
 
-The error rates drop dramatically. We could visualize with a plot?
+The error rates drop dramatically. This is because our metric ``spreads out'' the points along the $x_1$-axis, meaning that the nearest neighbours are more likely to be located along the $x_2$ axis instead of the $x_1$. One could also think of it as adding a penalty to the distance along the $x_1$ axis. This is important because the distance along the $x_1$ axis is actually what separates the two classes. We've visualised the effect of transforming \knollC test set using \vect{M} in fig.~\ref{fig:knollCd}.
 
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{src/knollCdmetr.pdf}
+\caption{Visualisation of the \knollC test set, before and after transforming it using \vect{M}}
+\label{fig:knollCd}
+\end{figure}
 
 \end{document}

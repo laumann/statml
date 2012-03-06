@@ -11,8 +11,8 @@ function [mean1 mean2 sigma pc1 pc2] = lda(A)
     [first second]=dividedataset(A);
 
     %% get the mean for both classes
-    mean1=mean(first);
-    mean2=mean(second);
+    mean1=mean(first)
+    mean2=mean(second)
 
     %get the common sigma
     firstsum=[0,0;0,0];
@@ -30,7 +30,7 @@ function [mean1 mean2 sigma pc1 pc2] = lda(A)
         secondsum=secondsum+product;
     end
 
-    sigma=(firstsum+secondsum)/(length(A)-2);
+    sigma=(firstsum+secondsum)/(length(A)-2)
     mean1=mean1';
     mean2=mean2';
 

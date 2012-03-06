@@ -11,4 +11,6 @@ function knollplot(data, outfile)
     plot(pos(:,1), pos(:,2), 'og'); hold on
     plot(neg(:,1), pos(:,2), 'or'); hold off
 
-    print('-dpsc', outfile)
+    if nargin > 1
+        print('-dpsc', outfile)
+    end
