@@ -49,7 +49,7 @@ knntestrun(trainC, trainC, @(x,y) dmetr(x,y), [3 5 7 9])
 
 %% Visualise
 knollplot(testC); hold on
-[pos neg] = dividedataset(testC.*[100 1 1]);
+[pos neg] = dividedataset(bsxfun(@times, testC, [100 1 1]));
 
 plot(pos(:,1), pos(:,2), 'xg'); hold on
 plot(neg(:,1), pos(:,2), 'xr');

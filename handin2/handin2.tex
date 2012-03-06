@@ -9,6 +9,7 @@
 \usepackage{subfig}
 \usepackage{fullpage}
 \usepackage{url,paralist}
+\usepackage{caption}
 
 \author{Philip Pickering\\ \url{pgpick@gmx.at} \and Marco Eilers\\ \url{eilers.marco@googlemail.com} \and Thomas Bracht Laumann Jespersen\\ \url{ntl316@alumni.ku.dk}}
 \title{Statistical Methods for Machine Learning\\ Assignment 2: Basic Learning Algorithms}
@@ -412,28 +413,27 @@ For instance, if we let $\vect{x},\vect{y},\vect{z} \in \mathbb{R}^2$ and $\vect
 \subsubsection{Results}
 Using $d$ as metric on \knollC we obtain the results shown in table~\ref{tbl:knollCd}.
 
-\begin{table}[h!]
+\noindent\begin{minipage}{.4\textwidth}
+    \centering
+    %%\hfill\\[1em]
+    \begin{tabular}{c | c|c }
+      $k$ & training set & test set\\ \hline
+      1 & 0.04 &   - \\
+      3 & 0.02 & 0.01\\
+      5 & 0.03 & 0.01\\ 
+      7 & 0.04 & 0.01\\ 
+      9 & 0.03 & 0.02 \\\hline\hline
+      \hfill & 3 & 3
+    \end{tabular}
+    \captionof{table}{Results for \knollC using $d$ as metric}\label{tbl:knollCd}
+\end{minipage}%
+\begin{minipage}{.6\textwidth}
   \centering
-  \begin{tabular}{c | c|c }
-    $k$ & training set & test set\\ \hline
-    1 & 0.04 &   - \\
-    3 & 0.02 & 0.01\\
-    5 & 0.03 & 0.01\\ 
-    7 & 0.04 & 0.01\\ 
-    9 & 0.03 & 0.02 \\\hline\hline
-    \hfill & 3 & 3
-  \end{tabular}
-  \caption{Results for \knollC using $d$ as metric}
-  \label{tbl:knollCd}
-\end{table}
+  \includegraphics[width=.9\textwidth]{src/knollCdmetr.pdf}
+  \captionof{figure}{Visualisation of the \knollC test set, before and after transforming it using \vect{M}}\label{fig:knollCd}
+\end{minipage}
+\hfill\\[.3em]
 
 The error rates drop dramatically. This is because our metric ``spreads out'' the points along the $x_1$-axis, meaning that the nearest neighbours are more likely to be located along the $x_2$ axis instead of the $x_1$. One could also think of it as adding a penalty to the distance along the $x_1$ axis. This is important because the distance along the $x_1$ axis is actually what separates the two classes. We've visualised the effect of transforming \knollC test set using \vect{M} in fig.~\ref{fig:knollCd}.
-
-\begin{figure}
-\centering
-\includegraphics[width=.8\textwidth]{src/knollCdmetr.pdf}
-\caption{Visualisation of the \knollC test set, before and after transforming it using \vect{M}}
-\label{fig:knollCd}
-\end{figure}
 
 \end{document}
