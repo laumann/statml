@@ -4,7 +4,7 @@ SRC="src/*.m src/*.mat src/*.dt"
 GRAPHICS="src/*.eps"
 REPORT="handin2.pdf README.txt"
 
-ARCHIVE="handin2final"
+ARCHIVE="handin2philipmarcothomas"
 
 rm -rf $ARCHIVE
 mkdir $ARCHIVE
