@@ -12,14 +12,13 @@ function d = findDeltas(Ws, actD, target, out, As)
 %% Result:
 %%  d = vector of deltas. idx(0) and idx(1) will be 0
 %%
-    lastIdx = size(Ws, 1)
+    lastIdx = size(Ws, 1);
     d = [zeros(lastIdx - 1, 1); out-target];
     
     
-    %% find deltas only for hidden layer
+    %% find deltas only for hidden layer (backwards)
     for i = (lastIdx -1) : -1 : idx(2) 
-        i
-        x = Ws(i+1:lastIdx, i) .* d(i+1:lastIdx)
-        d(i) = actD(As(i)) * sum(x)
+        x = Ws(i+1:lastIdx, i) .* d(i+1:lastIdx);
+        d(i) = actD(As(i)) * sum(x);
     end
     
