@@ -12,11 +12,11 @@ function Ws = initWs(hidden)
     %% connect bias and input to hidden layer and output
     
     for i = 2:hidden+2
-        Ws(idx(0), idx(i)) = rand();
-        Ws(idx(1), idx(i)) = rand();
+        Ws(idx(i), idx(0)) = rand();
+        Ws(idx(i), idx(1)) = rand();
     end
     
     %% connect hidden layer to output
     for i = 2:hidden+1
-        Ws(idx(i), idx(hidden+2)) = 1;
+        Ws(idx(hidden+2), idx(i)) = rand();
     end
