@@ -24,8 +24,8 @@ function deltas = nntrain(input, target, W, act, actd)
 %%
 %% All the unspecified entries in W are zero.
 
-    As = [] %% Vector of activations
-    Z = [1; input ] %% Vector of computed outputs
+    As = []; %% Vector of activations
+    Z = [1; input ]; %% Vector of computed outputs
     for i = 2:size(W,1)
         a = 0;
         %% Calculate activation for hidden neuron i
@@ -34,20 +34,22 @@ function deltas = nntrain(input, target, W, act, actd)
                          Z(j)*W(j,i)));
             a = a + Z(j)*W(j,i);
         end
-        As = [As; a]
-        Z = [Z; act(a)]
+        As = [As; a];
+        Z = [Z; act(a)];
     end
 
     %% Error
-    As(size(As,1))
-    deltas = [zeros(size(W-2),1); abs(target - As(size(As,1)))]
+    As(size(As,1));
+    deltas = [0; zeros(size(W,1)-2,1); abs(target - As(size(As,1)))];
+
     
     %% For each hidden neuron, compute the delta
     for i = size(W,1)-1:-1:2
         for j = i+1:size(W,1)
-            deltas(i) = deltas(i) + deltas(j)*W(j,i)
+            deltas(i) = deltas(i) + deltas(j)*W(i, j);
         end
-        deltas(i) = actd(As(i-1))*deltas(i)
+        deltas(i) = actd(As(i-1))*deltas(i);
     end
 
+    grads = (Z*deltas')'
 
