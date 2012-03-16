@@ -6,7 +6,7 @@ function Ws = initWs(hidden)
 %%  (index 0 is used for bias)
 %%  use idx()-function for correct indexing
 
-    size = hidden + 3 %% three because: 1 input, 1 output, 1 bias-input
+    size = hidden + 3; %% three because: 1 input, 1 output, 1 bias-input
     Ws = zeros(size);
     
     %% connect bias and input to hidden layer and output
