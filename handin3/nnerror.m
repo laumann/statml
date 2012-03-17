@@ -5,9 +5,9 @@ function error = nnerror(Ws, tdata, acts)
     err = [];
     for i = 1:length(tdata)
         result = runNN(Ws, tdata(i, 1), acts);
-        e = result(size(result, 1), 2) - tdata(i, 2);
+        e = abs(result(size(result, 1), 2) - tdata(i, 2));
         err = [err; e];
     end
     err;
     error = mean(err);
-    
+    %%error = err;

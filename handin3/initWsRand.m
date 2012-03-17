@@ -1,4 +1,4 @@
-function Ws = initWs(hidden)
+function Ws = initWsRand(hidden)
 %% hidden: # of neurons in hidden layer
 %%  
 %% Ws = initial weight matrix
@@ -13,10 +13,10 @@ function Ws = initWs(hidden)
     
     for i = 2:hidden+2
         Ws(idx(i), idx(0)) = 1;
-        Ws(idx(i), idx(1)) = 1;
+        Ws(idx(i), idx(1)) = rand();
     end
     
     %% connect hidden layer to output
     for i = 2:hidden+1
-        Ws(idx(hidden+2), idx(i)) = 1;
+        Ws(idx(hidden+2), idx(i)) = rand();
     end
