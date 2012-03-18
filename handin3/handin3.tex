@@ -70,16 +70,75 @@ the network parameters.
 
 \section{Support Vector Machines}
 
+For this part of the assignment we chose to use the LIBSVM software.
+
 \subsection{Model Selection}
 Description (we normalized the data, then used the builtin function of libsvm, tried these values for gamma: [])
 
-Result: best parameters are:
+We did grid search using the following values of $\gamma: \{ 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 \}$. This choice is based on what?
+
+LIBSVM has built-in functionality to perform $n$-fold cross validation
+given a command line option. To perform model selection we iterate
+through all combinations of $C$ and $\gamma$ and call a function
+called \texttt{crossval}, which invokes LIBSVM to perform a 5-fold
+cross validation on the current values of $C$ and $\gamma$. When
+performing $n$-fold cross validation, LIBSVM returns the accuracy,
+which we  use to keep track of the configuration that gives the
+highest accuracy.
+
+%% Result: best parameters are:
+%% C: 1000, gamma: 0.100000 Cross Validation Accuracy = 98%
+%% C: 1000, gamma: 0.100000 Cross Validation Accuracy = 97.5%
+%% C: 100, gamma: 1.000000 Cross Validation Accuracy = 97.5%
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l | c | c | c }
+    \hfill & $C$ & $\gamma$ & Acc.\\\hline
+    \texttt{knollC-train100} & 1000 & 0.1 & 98\%\\
+    \texttt{knollC-train200} & 1000 & 0.1 & 97.5\%\\
+    \texttt{knollC-train400} & 100 & 1 & 97.5\%
+  \end{tabular}
+  \caption{Table of results for model selection using grid-search
+    showing the optimal values for $C$ and $\gamma$.}
+\end{table}
 
 Applied to the testdata, this gives the following results:
 
-\begin{figure}
-  \includegraphics[width=\textwidth]{Code/freeBoundedSVs.eps}
-  \caption{\texttt{knollC-train200} trained SVM model. Bounded support vectors are circled in green and free support vectors are circled in black.}
+\subsection{Inspecting the kernel expansion}
+
+\subsubsection{Visualization}
+
+Fig.~\ref{fig:freebounded} shows the plot of the \texttt{knollC-train200} data set, in which the support vectors are circled. The free support vectors are circled in black, and bounded are circled in green. There are 87 bounded support vectors, and just six free for a total of 93 support vectors.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=.8\textwidth]{Code/freeBoundedSVs.eps}
+  \caption{\texttt{knollC-train200} data set with circled support vectors.}
+  \label{fig:freebounded}
 \end{figure}
+
+\subsubsection{Effect of the regularization parameter}
+
+%%Retrain model on \texttt{knollC-train200} using values of $C$ that are 100 times larger and 100 times smaller than the $C*$ found during model selection. How does it change?
+
+The file \texttt{regularization.m} performs the outlined procedure, by first training the SVM model using the values for $C$ and $\gamma$ found during model selection. Then it trains to other models, one in which $C$ is multiplied by a hundred and one in which we divide $C$ by 100.
+
+The most notable change is in the number of support vectors. There's a total of 93 support vectors for the ``original'' value of $C$---87 of which are bounded. When $C$ is a hundred times larger, the number of support vectors drop to just 19, all of which are free. Conversely, when dividing $C$ by a hundred we get an increase in the number of support vectors to 199, but again all of them are free.
+
+\subsubsection{Scaling behaviour}
+
+Table of free and bounded 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l | c | c}
+    \hfill & bounded & free\\\hline
+    \texttt{knollC-train100} & 5 & 60 \\
+    \texttt{knollC-train200} & 6 & 87 \\
+    \texttt{knollC-train400} & 12 & 153 \\
+  \end{tabular}
+  \caption{Table of bounded and free support vectors for the three data sets.}
+  \label{tab:knoll_free_bounded_SV}
+\end{table}
 
 \end{document}
