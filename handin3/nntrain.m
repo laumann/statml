@@ -45,8 +45,8 @@ modc = {mods mods2};
 
 %%Ws = multiBatchTrain(Ws, sincTrain50, acts, actd, allowed, LR,
 %%500);
-steps = 50;
-runs = 500;
+steps = 500;
+runs = 50;
 %while eps < err
 ErrVecTrain = {};
 ErrVecTest = {};
@@ -83,7 +83,8 @@ for i = 1:steps
     errTest20LR4 = ErrVecTest{1, 2};
     errTest2LR4 = ErrVecTest{2, 2};
  
-    [i  errTest20LR4(i) errTest2LR4(i) ]
+    sprintf(['i: %d; E 20 LR 10^-4: %f; E 2 LR 10^-4: %f; ' ...
+    '%s'], i ,errTest20LR4(i),errTest2LR4(i),datestr(now()))
     %Ws = modWs(Ws, LR, accPartDerivs);
 end
 
