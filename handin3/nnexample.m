@@ -1,4 +1,10 @@
 %% simple exmple session for nn batch training
+load Data/sincTrain50.dt
+
+tdata = sincTrain50;
+
+act = @(u) u/(1 + abs(u));
+actd = @(u) 1/(1 + abs(u))^2;
 
 Ws = initWs(4);
 allowed = initAllowed(Ws);

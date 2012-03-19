@@ -39,12 +39,7 @@
 
 \section{Neural Networks}
 
-\begin{enumerate}\setlength{\itemsep}{-3pt}
-  \item How to represent the neural network in MATLAB? One method
-    could be $M\times M$ matrix (where $M$ is the number of
-    neurons). Call it \vect{NN}. Then we number the neurons from
-    $1,\dots,M$ and $\vect{NN}(i;j) = w_{i,j}$
-\end{enumerate}
+\subsection{Neural Network implementation}
 
 Implement a multi-layer neural network with linear output neuron and a
 single hidden layer with non-linear neuron. All neurons should have
@@ -68,6 +63,18 @@ where, in our case $f(u) = |u|$ and $g(u) = 1 + |u|$.
 Implement backpropagation to compute gradient of error with respect to
 the network parameters.
 
+\subsection{Neural Network training}
+
+Fig.~\ref{fig:semilognn} plots the $\frac{\sin{x}}{x}$ on the range $[-10,10]$ along with the predictions of our trained NN model.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=.8\textwidth]{semilognn.eps}
+  \caption{Plot of $\frac{\sin{x}}{x}$ width neural network predictions for the same range.}
+  \label{fig:semilognn}
+\end{figure}
+
+\newpage
 \section{Support Vector Machines}
 
 For this part of the assignment we chose to use the LIBSVM software.
