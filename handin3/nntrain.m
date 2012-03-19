@@ -17,7 +17,7 @@ actd = @(u) 1/(1 + abs(u))^2;
 eps = 0.000001;
 
 Ws = initWsRand(h);
-
+Ws20LR3 = Ws;
 Ws2LR3 = initWsRand(h2);
 
 allowed = initAllowed(Ws20LR3);
