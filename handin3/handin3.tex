@@ -10,6 +10,7 @@
 \usepackage{fullpage}
 \usepackage{url,paralist}
 \usepackage{caption}
+\usepackage{slashbox}
 
 \author{Philip Pickering\\ \url{pgpick@gmx.at} \and Marco Eilers\\ \url{eilers.marco@googlemail.com} \and Thomas Bracht Laumann Jespersen\\ \url{ntl316@alumni.ku.dk}}
 \title{Statistical Methods for Machine Learning\\ Assignment 2: Basic Learning Algorithms}
@@ -93,6 +94,57 @@ performing $n$-fold cross validation, LIBSVM returns the accuracy,
 which we  use to keep track of the configuration that gives the
 highest accuracy.
 
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l | c | c | c | c | c | c}
+    \backslashbox{$\gamma$}{$C$} & $0.1$ & $1$ & $10$ & $100$ & $1000$ & $10000$\\\hline
+    $0.0001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 55\% \\
+    $0.001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 65\% \\
+    $0.01$ & 55\% & 55\% & 56\% & 57\% & 65\% & 98\% \\
+    $0.1$ & 60\% & 60\% & 59\% & 63\% & 98\% & 95\% \\
+    $1$ & 57\% & 58\% & 59\% & 92\% & 97\% & 94\% \\
+    $10$ & 51\% & 54\% & 67\% & 88\% & 92\% & 91\% \\
+    $100$ & 52\% & 47\% & 76\% & 76\% & 77\% & 77\% \\
+  \end{tabular}
+  \caption{Table of all results for model selection using grid-search
+    for \texttt{knollC-train100}.}
+  \label{tab:crossval100}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l | c | c | c | c | c | c}
+    \backslashbox{$\gamma$}{$C$} & $0.1$ & $1$ & $10$ & $100$ & $1000$ & $10000$\\\hline
+    $0.0001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 55\% \\
+    $0.001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 65\% \\
+    $0.01$ & 55\% & 55\% & 56\% & 57\% & 65\% & 98\% \\
+    $0.1$ & 60\% & 60\% & 59\% & 63\% & 98\% & 95\% \\
+    $1$ & 57\% & 58\% & 59\% & 92\% & 97\% & 94\% \\
+    $10$ & 51\% & 54\% & 67\% & 88\% & 92\% & 91\% \\
+    $100$ & 52\% & 47\% & 76\% & 76\% & 77\% & 77\% \\
+  \end{tabular}
+  \caption{Table of all results for model selection using grid-search
+    for \texttt{knollC-train200}.}
+  \label{tab:crossval200}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l | c | c | c | c | c | c}
+    \backslashbox{$\gamma$}{$C$} & $0.1$ & $1$ & $10$ & $100$ & $1000$ & $10000$\\\hline
+    $0.0001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 55\% \\
+    $0.001$ & 55\% & 55\% & 55\% & 55\% & 55\% & 65\% \\
+    $0.01$ & 55\% & 55\% & 56\% & 57\% & 65\% & 98\% \\
+    $0.1$ & 60\% & 60\% & 59\% & 63\% & 98\% & 95\% \\
+    $1$ & 57\% & 58\% & 59\% & 92\% & 97\% & 94\% \\
+    $10$ & 51\% & 54\% & 67\% & 88\% & 92\% & 91\% \\
+    $100$ & 52\% & 47\% & 76\% & 76\% & 77\% & 77\% \\
+  \end{tabular}
+  \caption{Table of all results for model selection using grid-search
+    for \texttt{knollC-train400}.}
+  \label{tab:crossval400}
+\end{table}
+
 %% Result: best parameters are:
 %% C: 1000, gamma: 0.100000 Cross Validation Accuracy = 98%
 %% C: 1000, gamma: 0.100000 Cross Validation Accuracy = 97.5%
@@ -107,9 +159,24 @@ highest accuracy.
   \end{tabular}
   \caption{Table of results for model selection using grid-search
     showing the optimal values for $C$ and $\gamma$.}
+  \label{tab:svmoptimal}
 \end{table}
 
-Applied to the testdata, this gives the following results:
+Applied to the testdata, this gives the results in table ~\ref{tab:crossval100} to ~\ref{tab:crossval400}. The resulting optimal parameter configurations are shown in table ~\ref{tab:svmoptimal}.
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l | c | c | c | c}
+    \backslashbox{Model}{Data} & \texttt{knollC-train100} & \texttt{knollC-train200} & \texttt{knollC-train400} & \texttt{knollC-test}\\\hline
+    \texttt{knollC-train100} & 98\% & 97.5\% & 96.75\% & 97\%\\
+    \texttt{knollC-train200} & 98\% & 98\% & 97.5\% & 98\%\\
+    \texttt{knollC-train400} & 99\% & 98.5\% & 97.25\% & 98\%
+  \end{tabular}
+  \caption{Percentage of correct predictions when applying the model from each training data set to the training and test data.}
+  \label{tab:svmpredictresults}
+\end{table}
+
+
 
 \subsection{Inspecting the kernel expansion}
 
@@ -120,7 +187,7 @@ Fig.~\ref{fig:freebounded} shows the plot of the \texttt{knollC-train200} data s
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=.8\textwidth]{Code/freeBoundedSVs.eps}
-  \caption{\texttt{knollC-train200} data set with circled support vectors.}
+  \caption{\texttt{knollC-train200} data set with free support vectors (circles) and bounded support vectors (squares).}
   \label{fig:freebounded}
 \end{figure}
 

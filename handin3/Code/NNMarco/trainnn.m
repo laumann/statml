@@ -3,7 +3,7 @@ data=load('sincTrain50.dt');
 
 layers=[1,30,1];
 
-%w=randn(32, 33);
+w=randn(32, 33);
 %w=ones(22,23)*0.02
 %w=initw;
 

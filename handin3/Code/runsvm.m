@@ -30,7 +30,24 @@ c400model=train(knollC400, c400, gamma400);
 
 %% And run all instances on themselves (and the others?) and the test data
 
-%% TODO
+getpct=@(a,b) sum(a==b)/size(a,1);
+disp('Running the model for knollC-train100 on all data sets.');
+fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c100model)));
+fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c100model)));
+fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c100model)));
+fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c100model)));
+
+disp('Running the model for knollC-train200 on all data sets.');
+fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c200model)));
+fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c200model)));
+fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c200model)));
+fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c200model)));
+
+disp('Running the model for knollC-train400 on all data sets.');
+fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c400model)));
+fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c400model)));
+fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c400model)));
+fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c400model)));
 
 
 
@@ -54,8 +71,8 @@ plot(class1(:, 1), class1(:, 2), 'rx');
 hold on;
 plot(class2(:, 1), class2(:, 2), 'bx');
 
-%% Plot SVs: bounded SVs in green, free ones in black
-plot(bounded200(:,1), bounded200(:,2), 'go');
+%% Plot SVs: bounded SVs as squares, free ones as circles
+plot(bounded200(:,1), bounded200(:,2), 'ks');
 plot(free200(:,1), free200(:,2), 'ko');
 
 print -dpsc freeBoundedSVs.eps;
