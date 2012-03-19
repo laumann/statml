@@ -74,5 +74,8 @@ plot(class2(:, 1), class2(:, 2), 'bx');
 %% Plot SVs: bounded SVs as squares, free ones as circles
 plot(bounded200(:,1), bounded200(:,2), 'ks');
 plot(free200(:,1), free200(:,2), 'ko');
+legend('Class 1','Class 2','Bounded Support Vectors','Free Support Vectors');
+xlabel('x1');
+ylabel('x2');
 
 print -dpsc freeBoundedSVs.eps;
