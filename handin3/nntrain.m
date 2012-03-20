@@ -16,9 +16,9 @@ actd = @(u) 1/(1 + abs(u))^2;
 
 eps = 0.000001;
 
-Ws = initWsRand(h);
+Ws = initWsRandNoShort(h);
 Ws20LR3 = Ws;
-Ws2LR3 = initWsRand(h2);
+Ws2LR3 = initWsRandNoShort(h2);
 
 allowed = initAllowed(Ws20LR3);
 allowed2 = initAllowed(Ws2LR3);
@@ -110,9 +110,9 @@ end
 plot(sincTrain50(:, 1), sincTrain50(:, 2), 'bx');
 legend('sin(x)/x', 'LR=0.001', 'LR=0.0001', 'LR=0.00001', ...
        'LR=0.000001', 'test data');
-title('NN with 20 neurons in hidden layer')
+title('NN with 20 neurons in hidden layer / no shortcut')
 
-print -dpsc 'solution20.eps'
+print -dpsc 'solution20ns.eps'
 hold off;
 close;
 
@@ -124,9 +124,9 @@ end
 plot(sincTrain50(:, 1), sincTrain50(:, 2), 'bx');
 legend('sin(x)/x', 'LR=0.001', 'LR=0.0001', 'LR=0.00001', ...
        'LR=0.000001', 'test data');
-title('NN with 2 neurons in hidden layer')
+title('NN with 2 neurons in hidden layer / no shortcut')
 
-print -dpsc 'solution2.eps'
+print -dpsc 'solution2ns.eps'
 hold off;
 close;
 
@@ -139,8 +139,8 @@ legend('Error to training data, LR=0.0001', ...
 'Error to test data, LR=0.0001',...
 'Error to training data, LR=0.00001',...
 'Error to test data, LR=0.00001');
-title('Error rates of 20 hidden layer neurons NN');
-print -dpsc 'errors20.eps'
+title('Error rates of 20 hidden layer neurons NN / no shortcut');
+print -dpsc 'errors20ns.eps'
 hold off;
 
 close;
@@ -155,8 +155,8 @@ legend('Error to training data, LR=0.0001', ...
 'Error to test data, LR=0.0001',...
 'Error to training data, LR=0.00001',...
 'Error to test data, LR=0.00001');
-title('Error rates of 2 hidden layer neurons NN');
-print -dpsc 'errors2.eps'
+title('Error rates of 2 hidden layer neurons NN / no shortcut');
+print -dpsc 'errors2ns.eps'
 hold off;
 close;
 
