@@ -109,7 +109,7 @@ for i = 1:4
 end
 plot(sincTrain50(:, 1), sincTrain50(:, 2), 'bx');
 legend('sin(x)/x', 'LR=0.001', 'LR=0.0001', 'LR=0.00001', ...
-       'LR=0.000001', 'test data');
+       'LR=0.000001', 'training data');
 title('NN with 20 neurons in hidden layer / no shortcut')
 
 print -dpsc 'solution20ns.eps'
@@ -123,7 +123,7 @@ for i = 1:4
 end
 plot(sincTrain50(:, 1), sincTrain50(:, 2), 'bx');
 legend('sin(x)/x', 'LR=0.001', 'LR=0.0001', 'LR=0.00001', ...
-       'LR=0.000001', 'test data');
+       'LR=0.000001', 'training data');
 title('NN with 2 neurons in hidden layer / no shortcut')
 
 print -dpsc 'solution2ns.eps'
