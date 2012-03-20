@@ -13,7 +13,8 @@ Run nntrain.m, which
 * creates weight matrices representing eight neural networks, 
 * trains them for 25000 batch learning iterations,
 * measures the error to training and test sets every 50 iterations,
-* plots the solutions and the error trajectories.
+* plots the solutions and the error trajectories,
+* save these plots to solution20ns.eps, solution2.eps, error20ns.eps and error2ns.eps.
 
 The eight neural networks are:
 * four with a hidden layer of 20 neurons, 
