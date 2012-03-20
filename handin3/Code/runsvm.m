@@ -30,24 +30,37 @@ c400model=train(knollC400, c400, gamma400);
 
 %% And run all instances on themselves (and the others?) and the test data
 
-getpct=@(a,b) sum(a==b)/size(a,1);
+
 disp('Running the model for knollC-train100 on all data sets.');
-fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c100model)));
-fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c100model)));
-fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c100model)));
-fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c100model)));
+disp('knollC-train100: ');
+classify(knollC100(:,1:2), c100model, knollC100(:,3));
+disp('knollC-train200: ');
+classify(knollC200(:,1:2), c100model, knollC200(:,3));
+disp('knollC-train400: ');
+classify(knollC400(:,1:2), c100model, knollC400(:,3));
+disp('knollC-test: ');
+classify(knollCtest(:,1:2), c100model, knollCtest(:,3));
 
 disp('Running the model for knollC-train200 on all data sets.');
-fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c200model)));
-fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c200model)));
-fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c200model)));
-fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c200model)));
+disp('knollC-train100: ');
+classify(knollC100(:,1:2), c200model, knollC100(:,3));
+disp('knollC-train200: ');
+classify(knollC200(:,1:2), c200model, knollC200(:,3));
+disp('knollC-train400: ');
+classify(knollC400(:,1:2), c200model, knollC400(:,3));
+disp('knollC-test: ');
+classify(knollCtest(:,1:2), c200model, knollCtest(:,3));
 
 disp('Running the model for knollC-train400 on all data sets.');
-fprintf('knollC-train100: %d %% \n', getpct(knollC100(:,3), classify(knollC100(:, 1:2), c400model)));
-fprintf('knollC-train200: %d %% \n', getpct(knollC200(:,3), classify(knollC200(:, 1:2), c400model)));
-fprintf('knollC-train400: %d %% \n', getpct(knollC400(:,3), classify(knollC400(:, 1:2), c400model)));
-fprintf('knollC-test: %d %% \n', getpct(knollCtest(:,3), classify(knollCtest(:, 1:2), c400model)));
+disp('knollC-train100: ');
+classify(knollC100(:,1:2), c400model, knollC100(:,3));
+disp('knollC-train200: ');
+classify(knollC200(:,1:2), c400model, knollC200(:,3));
+disp('knollC-train400: ');
+classify(knollC400(:,1:2), c400model, knollC400(:,3));
+disp('knollC-test: ');
+classify(knollCtest(:,1:2), c400model, knollCtest(:,3));
+
 
 
 
