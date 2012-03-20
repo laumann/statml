@@ -218,6 +218,8 @@ Applied to the testdata, this gives the results in tables ~\ref{tab:crossval100}
   \label{tab:svmoptimal}
 \end{table}
 
+If we train the SVM on all training data sets and run the resulting models on all training sets and the test set, we get result in table ~\ref{tab:svmpredictresults}. We can clearly see that all models behave about equally well on the test data and the other training data sets as on their own particular training set, so there seems to be no overfitting the problem. With more than 96\% accuracy for all combinations of model and data, the quality of the prediction is generally very high, however the results of models with larger training data sets tend to slightly surpass those for lower values on $n$.
+
 \begin{table}[!h]
   \centering
   \begin{tabular}{l | c | c | c | c}
@@ -236,7 +238,7 @@ Applied to the testdata, this gives the results in tables ~\ref{tab:crossval100}
 
 \subsubsection{Visualization}
 
-Fig.~\ref{fig:freebounded} shows the plot of the \texttt{knollC-train200} data set, in which the support vectors are circled. The free support vectors are circled in black, and bounded are circled in green. There are 87 bounded support vectors, and just six free for a total of 93 support vectors.
+Fig.~\ref{fig:freebounded} shows the plot of the \texttt{knollC-train200} data set, in which the support vectors are circled. The free support vectors are circled in black, and bounded are circled in green. There are 87 bounded support vectors, and just six free ones for a total of 93 support vectors.
 
 \begin{figure}[!ht]
   \centering
@@ -255,7 +257,9 @@ The most notable change is in the number of support vectors. There's a total of 
 
 \subsubsection{Scaling behaviour}
 
-Table of free and bounded 
+See table ~\ref{tab:knoll_free_bounded_SV} for the number of bounded and free support vectors for all training data sets. The number of support vectors grows (nearly) linearly with the number of data patterns in the training sets, as is to be expected. Since a higher number of support vectors will increase the computational effort for classifying new data patterns, this development needs to be controlled; otherwise, it may lead to a near-quadratic rise in complexity if training and test data grow alike. 
+
+In general, a higher number of samples of a distribution with a non-zero Bayes risk means that more samples will be misclassified. Using a Gaussian kernel and therefore an infinite-dimensional feature space, this could of course be prevented, but that would most likely mean that we overfit the model to our training data and is therefore not desirable. To avoid this, i.e. to decrease the penalty for misclassifications in our model, this should mean that a lower value should be chosen for $C$. This is confirmed nicely by the fact that during our tests, $C=100$ actually gave the best results for $n=400$, whereas for lower values of $n$, $C=1000$ performed better. 
 
 \begin{table}[h!]
   \centering
