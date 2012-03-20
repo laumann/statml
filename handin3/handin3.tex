@@ -253,7 +253,7 @@ Fig.~\ref{fig:freebounded} shows the plot of the \texttt{knollC-train200} data s
 
 The file \texttt{regularization.m} performs the outlined procedure, by first training the SVM model using the values for $C$ and $\gamma$ found during model selection. Then it trains to other models, one in which $C$ is multiplied by a hundred and one in which we divide $C$ by 100.
 
-The most notable change is in the number of support vectors. There's a total of 93 support vectors for the ``original'' value of $C$---87 of which are bounded. When $C$ is a hundred times larger, the number of support vectors drop to just 19, all of which are free. Conversely, when dividing $C$ by a hundred we get an increase in the number of support vectors to 199, but again all of them are free.
+The most notable change is in the number of support vectors. There's a total of 93 support vectors for the ``original'' value of $C$---87 of which are bounded. When $C$ is a hundred times larger, the number of support vectors drop to just 19, 14 of which are bounded. Conversely, when dividing $C$ by a hundred we get an increase in the number of support vectors to 199, and again most of them (195) are free.
 
 \subsubsection{Scaling behaviour}
 

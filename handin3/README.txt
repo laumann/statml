@@ -15,7 +15,8 @@ TODO
 Support Vector Machines
 -----------------------
 The implementation of the SVM exercise depends on the current version of the LIBSVM Matlab interface being compiled and available in Matlab. It will not run correctly if Matlab picks its own builtin function svmtrain instead. 
-Run runsvm.m to start all calculations concerning the SVM exercise. It will print all results of the model selection and kernel inspection tasks to the console. The plot of bounded and unbounded support vectors will be saved as freeBoundesSVs.eps in the current directory. 
+Run runsvm.m to start most calculations concerning the SVM exercise. It will print the results of the model selection and kernel inspection tasks except for 2.2.2  to the console. The plot of bounded and unbounded support vectors will be saved as freeBoundesSVs.eps in the current directory. 
+For 2.2.2, run regularization.m.
 Subtasks like the model selection (modelselect.m) and the calculation of bounded and free support vectors (dividesupportvectors.m) have been saved in separate functions and should be self-explanatory.
 
 Authors
