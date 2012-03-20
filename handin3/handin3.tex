@@ -66,21 +66,68 @@ the network parameters.
 
 \subsection{Neural Network training}
 
-Fig.~\ref{fig:semilognn} plots the $\frac{\sin{x}}{x}$ on the range $[-10,10]$ along with the predictions of our trained NN model.
+Training of our neural network model starts from the file
+\texttt{nntrain.m}. This file takes care of training the model and
+plotting the results.
+
+The MATLAB function \texttt{multiBatchTrain} performs a given number
+of batch runs, meaning for each run we do a batch training round of
+forward and backward propagations, accumulate the partial derivatives
+and do the weight modification. In the training we do 500 iterations
+of 50 runs for a total of 25,000
+iterations. Fig.~\ref{fig:nnsolutions} plots $\frac{\sin{x}}{x}$
+on the range $[-10,10]$ along with the predictions of our trained NN 
+model for different learning rates and the training
+data.
+
+Fig.~\ref{fig:nnsolutions}(a)--(b) show the neural networks of
+two hidden neurons. In fig.~\ref{fig:nnsolutions}(a) the result when
+shortcuts are omitted and fig.~\ref{fig:nnsolutions}(b) the same model
+trained using shortcuts.
+
+In fig.~\ref{fig:nnsolutions}(c)--(b) is shown neural networks of 20
+hidden neurons, where fig.~\ref{fig:nnsolutions}(c) is without
+shortcuts and fig.~\ref{fig:nnsolutions}(d) is with.
+
+We found it instructive to include the models trained with and without
+shortcuts, because in both cases the model using shortcuts performs
+better on the same learning time independently of the learning rate.
+
+It is also clear that the highest learning rate possible (which didn't
+produce numerical overflows), gave better solutions on the same
+learning time.
 
 \begin{figure}[!h]
   \centering
-  \subfloat{\includegraphics[width=.5\textwidth]{solution2.eps}}
-  \subfloat{\includegraphics[width=.5\textwidth]{solution20.eps}}
-  \caption{Neural networks for 2 and 20 hidden neurons. }
-  \label{fig:semilognn}
+  \subfloat[\hfill]{\includegraphics[width=.5\textwidth]{solution2ns.eps}}
+  \subfloat[\hfill]{\includegraphics[width=.5\textwidth]{solution2.eps}}
+
+  \subfloat[\hfill]{\includegraphics[width=.5\textwidth]{solution20ns.eps}}
+  \subfloat[\hfill]{\includegraphics[width=.5\textwidth]{solution20.eps}}
+  \caption{Neural networks for 2 and 20 hidden neurons.}
+  \label{fig:nnsolutions}
 \end{figure}
 
+Fig.~\ref{fig:nnerrors} shows the error trajectories for our different
+neural networks. A learning epoch on the $x$-axis corresponds to 50
+iterations of batch training, meaning when $x = 100$, a total of 5000
+iterations have been performed.
+
+Interestingly, when shortcuts are omitted, the error rate decreases
+much faster than is the case when shortcuts are in use. One argument
+for why this is, could be that not using shortcuts leads to a simpler
+model that is faster to train (but obviously less flexible as
+demonstrated by fig.~\ref{fig:nnsolutions}).
+
 \begin{figure}[!h]
   \centering
+  \subfloat{\includegraphics[width=.5\textwidth]{errors2ns.eps}}
   \subfloat{\includegraphics[width=.5\textwidth]{errors2.eps}}
+
+  \subfloat{\includegraphics[width=.5\textwidth]{errors20ns.eps}}
   \subfloat{\includegraphics[width=.5\textwidth]{errors20.eps}}
   \caption{Error trajectories for the different NN models}
+  \label{fig:nnerrors}
 \end{figure}
 
 

@@ -1,20 +1,26 @@
 clear
+%% NN
+%% This file trains our NN models.
+%%
+%% Note that it doesn't plot or train models with shortcuts, but we
+%% have trained and plotted models (included in the report) using
+%% shortcuts as well. To do this, just replace the
+%% 'initWsRandNoShort' with either 'initWsRand' or simply
+%% 'initWs'. These three functions all initialise the weights
+%% matrix in different ways, the first using random weights and no
+%% shortcuts, the second using random weights + shortcuts and
+%% lastly initialising all weights (including shortcuts) to 1.
 
-
+%% Load the training data
 load Data/sincTrain50.dt
 load Data/sincTest50.dt
 
 h = 20;
 h2 = 2;
+
+%% Activation functions 'act' and its derivative 'actd'
 act = @(u) u/(1 + abs(u));
 actd = @(u) 1/(1 + abs(u))^2;
-% hidden_units = [2 5 10 20];
-
-% for h = hidden_units
-%     h
-% end
-
-eps = 0.000001;
 
 Ws = initWsRandNoShort(h);
 Ws20LR3 = Ws;
@@ -43,11 +49,9 @@ mods2 = findMods(allowed2);
 
 modc = {mods mods2};
 
-%%Ws = multiBatchTrain(Ws, sincTrain50, acts, actd, allowed, LR,
-%%500);
-steps = 500;
-runs = 50;
-%while eps < err
+steps = 500; % Number of learning epochs
+runs = 50;   % Number of iterations of batch training per epoch
+
 ErrVecTrain = {};
 ErrVecTest = {};
 for i = 1:2
@@ -55,6 +59,7 @@ for i = 1:2
     ErrVecTest = [ErrVecTest;{[] [] [] []}];
 end
 
+%% Training
 for i = 1:steps
     for k = 1:2
         for l = 1:4
@@ -65,10 +70,6 @@ for i = 1:steps
             ErrVecTest{k,l} = [ErrVecTest{k, l}; Er(WsCells{k, l}, sincTest50, actc{k})];
         end
     end
-    
-    
-    
-    
  
     %%accPartDerivs = accPds(Ws, sincTrain50(1,:), acts, actd, allowed);
 
@@ -89,19 +90,17 @@ for i = 1:steps
 end
 
 
-%% Use runNN to predict the entire range
-%% nnrange = @(r) arrayfun(runNN(Ws, in acts), r)
+%% Our range for plotting
+r = -10:.05:10;
 
+%% Anonymous functions for extracting the result
 getres = @(az) az(length(az), 2);
 nnmodel = @(x) getres(runNN(Ws, x, acts));
 
-
-r = -10:.05:10;
-%semilogy(r, sin(r)./r); hold on
-%semilogy(r, arrayfun(nnmodel, r), 'xr');
-
 colors = ['g', 'b', 'c', 'm'];
 
+
+%% Plotting: NN model of 20 hidden neurons w/o shortcuts
 plot(r, sin(r)./r, '-r'); hold on;
 for i = 1:4
     nnmodel = @(x) getres(runNN(WsCells{1, i}, x, acts));
@@ -116,6 +115,8 @@ print -dpsc 'solution20ns.eps'
 hold off;
 close;
 
+
+%% Plotting: NN model of 2 hidden neurons w/o shortcuts
 plot(r, sin(r)./r, '-r'); hold on;
 for i = 1:4
     nnmodel = @(x) getres(runNN(WsCells{2, i}, x, acts2));
@@ -130,6 +131,9 @@ print -dpsc 'solution2ns.eps'
 hold off;
 close;
 
+
+%% Plotting: Error trajectories for NN model of 20 hidden neurons
+%% w/o shortcuts
 for i = 2:3    
     semilogy(1:steps, ErrVecTrain{1, i}, sprintf('-%c', colors(i-1)));
     hold on;
@@ -142,10 +146,11 @@ legend('Error to training data, LR=0.0001', ...
 title('Error rates of 20 hidden layer neurons NN / no shortcut');
 print -dpsc 'errors20ns.eps'
 hold off;
-
 close;
 
 
+%% Plotting: Error trajectories for NN model of 2 hidden neurons
+%% w/o shortcuts
 for i = 2:3    
     semilogy(1:steps, ErrVecTrain{2, i}, sprintf('-%c', colors(i-1)));
     hold on;
