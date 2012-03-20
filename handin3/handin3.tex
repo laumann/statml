@@ -70,10 +70,19 @@ Fig.~\ref{fig:semilognn} plots the $\frac{\sin{x}}{x}$ on the range $[-10,10]$ a
 
 \begin{figure}[!h]
   \centering
-  \includegraphics[width=.8\textwidth]{semilognn.eps}
-  \caption{Plot of $\frac{\sin{x}}{x}$ width neural network predictions for the same range.}
+  \subfloat{\includegraphics[width=.5\textwidth]{solution2.eps}}
+  \subfloat{\includegraphics[width=.5\textwidth]{solution20.eps}}
+  \caption{Neural networks for 2 and 20 hidden neurons. }
   \label{fig:semilognn}
 \end{figure}
+
+\begin{figure}[!h]
+  \centering
+  \subfloat{\includegraphics[width=.5\textwidth]{errors2.eps}}
+  \subfloat{\includegraphics[width=.5\textwidth]{errors20.eps}}
+  \caption{Error trajectories for the different NN models}
+\end{figure}
+
 
 \newpage
 \section{Support Vector Machines}
