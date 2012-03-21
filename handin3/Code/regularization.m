@@ -9,8 +9,8 @@ modelLarger = train(data, C*100, gamma)
 modelSmaller = train(data, C/100, gamma)
 
 [f b] = dividesupportvectors(C, model.SVs, model.sv_coef);
-[fl bl] = dividesupportvectors(C, modelLarger.SVs, modelLarger.sv_coef);
-[fs bs] = dividesupportvectors(C, modelSmaller.SVs, ...
+[fl bl] = dividesupportvectors(C*100, modelLarger.SVs, modelLarger.sv_coef);
+[fs bs] = dividesupportvectors(C/100, modelSmaller.SVs, ...
                                modelSmaller.sv_coef);
 
 disp(sprintf('Original: #SVs: %d\t#free SVs: %d\t#bounded SVs: %d', ...
